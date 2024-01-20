@@ -1,4 +1,4 @@
-![GSoftApp_Logo](https://i0.wp.com/suzie3a55e32332.wpcomstaging.com/wp-content/uploads/2024/01/GSoft-logo.png?resize=300%2C88&ssl=1)
+![GSoftApp_Logo](https://i0.wp.com/gsoftapp.com/wp-content/uploads/2024/01/GSoft-logo.png?resize=300%2C88&ssl=1)
  
 # GSoftApp Framework
 
