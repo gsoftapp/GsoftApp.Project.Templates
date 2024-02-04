@@ -27,7 +27,7 @@ Nuget packages available [here](https://www.nuget.org/packages/GsoftApp.Framewor
 ### Dynamic Integrations
 With GSoftApp, you don’t have to worry about depending on single provider or technology. Due to GSoft’s one-of-a-kind extensibility features, you have the freedom to select any provider, or change to a different one in just a click if you wish so, without lengthy development time and rigid code
  
-![GSoftApp integrations](https://i0.wp.com/suzie3a55e32332.wpcomstaging.com/wp-content/uploads/2024/01/GSoft-photos-1440-x-1080-px-9.png?resize=1024%2C312&ssl=1)
+![GSoftApp integrations](https://gsoftapp.com/wp-content/uploads/2024/01/GSoft-photos-1440-x-1080-px-9-1024x312.png)
  
 ## Use Cases
 - Database Management, API Servers, Data Feed Providers, Alerting/Notification Servers, Microservices, and more.
