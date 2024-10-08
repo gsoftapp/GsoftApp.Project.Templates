@@ -12,17 +12,15 @@ Nuget packages available [here](https://www.nuget.org/packages/GsoftApp.Framewor
 - **No Deployment Required**: Solutions or upgrades can be delivered without a full DevOps lifecycle
 - **Out-of-the-Box API CRUD Operations**: Simplified operations for any entity
 - **Self-hosted**: Deploy your own self-hosted low code platform using GSoftApp
-- **Technology-agnostic**: Business logic independent of technologies used (hosting, databases, file storage, etc.)
+- **Technology-agnostic**: Business logic independent of technologies used (databases, file storage, etc.)
  
 ## Other Features
-- **Multiple Hosting Options**: Support for cloud environments like MS Azure, AWS, and containerized environments such as Docker and Kubernetes. Also supports on-premises hosting
-- **Cross-Platform Support**: Runs on Windows, Linux, MacOS, supporting multiple operating systems – without changing a single line of code
-- **Flexible Architecture**: Based on .NET 7, with a modular, loosely coupled design allowing independent component enhancement
+- **Flexible Architecture**: Based on .NET, with a modular, loosely coupled design allowing independent component enhancement
 - **Unlimited non-production environments**: Only in few clicks create as many non-production environments as needed for development, QA testing, training, try-outs and more
 - **Error Reduction**: Utilizes tested components to minimize errors, allowing developers to focus on business logic
-- **Pattern and Support**: Uses MVVM pattern and supports multi-platform hosting and multi-database systems like MS SQL Server, SQLite, MySQL
-- **Multi-language & UI Flexibility**: Supports multi-language localisation and offers in-memory application model 
-- **Independent UI**: Dynamic UI element replacement, and custom UI skins/themes
+- **Pattern and Support**: Uses MVVM pattern over the web. One UI implementation can serve all business applications
+- **Multi-language & UI Flexibility**: Supports automatic multi-language localization using translation services like Google Translator or MS Azure Translation services 
+- **Independent UI**: Dynamic and extensible UI architecture allows creating custom UI skins/themes
  
  
 ### Dynamic Integrations
