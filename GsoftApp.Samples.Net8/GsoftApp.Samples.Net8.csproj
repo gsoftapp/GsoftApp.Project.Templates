@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GsoftApp.Framework.Development" Version="8.0.0" />
-    <PackageReference Include="GsoftApp.Framework.Web.Core" Version="8.0.0" />
+    <PackageReference Include="GsoftApp.Framework.Development" Version="8.0.2" />
+    <PackageReference Include="GsoftApp.Framework.Web.Core" Version="8.0.2" />
   </ItemGroup>
 
 </Project>
