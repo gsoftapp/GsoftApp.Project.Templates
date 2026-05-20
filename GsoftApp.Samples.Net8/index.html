@@ -1,0 +1,3644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAF Framework — Developer Documentation</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+<style>
+:root {
+  --sidebar-w: 280px;
+  --header-h: 56px;
+  --sidebar-bg: #0f172a;
+  --sidebar-text: #94a3b8;
+  --sidebar-active: #3b82f6;
+  --sidebar-hover-bg: #1e293b;
+  --accent: #3b82f6;
+  --accent2: #8b5cf6;
+  --content-bg: #f8fafc;
+  --card-bg: #ffffff;
+  --text: #1e293b;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --code-bg: #1e293b;
+  --code-text: #e2e8f0;
+  --tag-getting-started: #10b981;
+  --tag-core: #3b82f6;
+  --tag-ui: #8b5cf6;
+  --tag-data: #f59e0b;
+  --tag-tasks: #ef4444;
+  --tag-platform: #06b6d4;
+  --tag-security: #ec4899;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--content-bg);color:var(--text);display:flex;min-height:100vh}
+
+/* SIDEBAR */
+.sidebar{
+  width:var(--sidebar-w);min-width:var(--sidebar-w);
+  background:var(--sidebar-bg);
+  height:100vh;position:sticky;top:0;
+  overflow-y:auto;display:flex;flex-direction:column;
+  border-right:1px solid #1e293b;
+  flex-shrink:0;
+}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-track{background:transparent}
+.sidebar::-webkit-scrollbar-thumb{background:#334155;border-radius:2px}
+.sidebar-header{
+  padding:16px;border-bottom:1px solid #1e293b;flex-shrink:0;
+  background:var(--sidebar-bg);position:sticky;top:0;z-index:10;
+}
+.logo{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0}
+.logo-text{font-size:15px;font-weight:700;color:#f1f5f9;letter-spacing:.3px}
+.logo-version{font-size:10px;color:#475569;margin-top:1px}
+.search-box{position:relative}
+.search-box input{
+  width:100%;padding:8px 10px 8px 32px;
+  background:#1e293b;border:1px solid #334155;border-radius:8px;
+  color:#f1f5f9;font-size:13px;outline:none;transition:border-color .2s;
+}
+.search-box input::placeholder{color:#64748b}
+.search-box input:focus{border-color:#3b82f6}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#64748b;font-size:13px;pointer-events:none}
+.nav-section{padding:8px 0}
+.nav-label{
+  padding:6px 16px 4px;font-size:10px;font-weight:700;
+  text-transform:uppercase;letter-spacing:1px;color:#475569;
+  display:flex;align-items:center;gap:6px;
+}
+.nav-label::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor}
+.nav-label.gs{color:var(--tag-getting-started)}
+.nav-label.core{color:var(--tag-core)}
+.nav-label.ui{color:var(--tag-ui)}
+.nav-label.data{color:var(--tag-data)}
+.nav-label.tasks{color:var(--tag-tasks)}
+.nav-label.platform{color:var(--tag-platform)}
+.nav-label.security{color:var(--tag-security)}
+.nav-link{
+  display:flex;align-items:center;padding:7px 16px 7px 24px;
+  color:var(--sidebar-text);text-decoration:none;font-size:13px;
+  transition:background .15s,color .15s;border-left:2px solid transparent;cursor:pointer;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.nav-link:hover{background:var(--sidebar-hover-bg);color:#e2e8f0}
+.nav-link.active{color:#fff;border-left-color:var(--accent);background:rgba(59,130,246,.12)}
+.nav-link .nav-icon{margin-right:8px;opacity:.7;flex-shrink:0}
+
+/* MAIN CONTENT */
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.top-bar{
+  height:var(--header-h);background:#fff;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 32px;gap:16px;
+  position:sticky;top:0;z-index:20;
+  box-shadow:0 1px 3px rgba(0,0,0,.06);
+}
+.top-bar-title{font-size:15px;font-weight:600;color:var(--text);flex:1}
+.breadcrumb{font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:6px}
+.breadcrumb span+span::before{content:'›';margin-right:6px}
+.content-area{padding:0;max-width:960px;margin:0 auto;width:100%;padding-bottom:60px}
+
+/* SECTIONS */
+.doc-section{
+  background:var(--card-bg);border:1px solid var(--border);
+  border-radius:12px;margin:24px;padding:32px 36px;
+  box-shadow:0 1px 3px rgba(0,0,0,.04);
+}
+.doc-section:first-child{margin-top:24px}
+.section-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;
+  padding:3px 10px;border-radius:20px;margin-bottom:12px;
+}
+.badge-gs{background:#ecfdf5;color:#059669}
+.badge-core{background:#eff6ff;color:#2563eb}
+.badge-ui{background:#faf5ff;color:#7c3aed}
+.badge-data{background:#fffbeb;color:#d97706}
+.badge-tasks{background:#fef2f2;color:#dc2626}
+.badge-platform{background:#ecfeff;color:#0891b2}
+.badge-security{background:#fdf2f8;color:#be185d}
+
+/* RENDERED MARKDOWN */
+.doc-section h1{font-size:24px;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.3}
+.doc-section h2{font-size:19px;font-weight:700;color:var(--text);margin:28px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--border);line-height:1.3}
+.doc-section h3{font-size:15px;font-weight:700;color:var(--text);margin:20px 0 8px}
+.doc-section h4{font-size:14px;font-weight:600;color:var(--text-muted);margin:16px 0 6px}
+.doc-section p{line-height:1.7;color:#374151;margin-bottom:12px;font-size:14.5px}
+.doc-section ul,.doc-section ol{margin:8px 0 12px 20px;line-height:1.7}
+.doc-section li{margin-bottom:4px;font-size:14.5px;color:#374151}
+.doc-section li input[type=checkbox]{margin-right:6px}
+.doc-section strong{font-weight:600;color:var(--text)}
+.doc-section em{font-style:italic;color:#4b5563}
+.doc-section a{color:var(--accent);text-decoration:none}
+.doc-section a:hover{text-decoration:underline}
+.doc-section hr{border:none;border-top:1px solid var(--border);margin:20px 0}
+.doc-section blockquote{border-left:3px solid var(--accent);padding:8px 16px;background:#eff6ff;border-radius:0 6px 6px 0;margin:12px 0;color:#1e3a5f;font-size:14px}
+
+/* TABLES */
+.doc-section table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px}
+.doc-section th{background:#f1f5f9;padding:8px 12px;text-align:left;font-weight:600;color:var(--text);border:1px solid var(--border)}
+.doc-section td{padding:7px 12px;border:1px solid var(--border);color:#374151;vertical-align:top}
+.doc-section tr:hover td{background:#f8fafc}
+.doc-section tbody tr:nth-child(even) td{background:#fafafa}
+.doc-section tbody tr:nth-child(even):hover td{background:#f0f4f8}
+
+/* CODE */
+.doc-section code{
+  font-family:'Fira Code','Cascadia Code','Consolas',monospace;
+  font-size:13px;background:#f1f5f9;color:#be123c;
+  padding:1px 6px;border-radius:4px;font-weight:500;
+}
+.doc-section pre{
+  background:#1e293b;border-radius:8px;margin:12px 0;
+  overflow-x:auto;border:1px solid #334155;
+}
+.doc-section pre code{
+  display:block;padding:16px;font-size:13px;line-height:1.6;
+  color:#e2e8f0;background:transparent;white-space:pre;
+}
+.doc-section pre .token.keyword{color:#93c5fd}
+.doc-section pre .token.string{color:#86efac}
+.doc-section pre .token.comment{color:#6b7280;font-style:italic}
+.doc-section pre .token.number{color:#fda4af}
+.doc-section pre .token.class-name{color:#c4b5fd}
+
+/* SEARCH HIGHLIGHT */
+.search-highlight{background:#fef9c3;border-radius:2px;padding:0 2px}
+
+/* BACK TO TOP */
+#back-to-top{
+  position:fixed;bottom:24px;right:24px;
+  width:40px;height:40px;background:var(--accent);color:#fff;
+  border:none;border-radius:50%;cursor:pointer;font-size:18px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(59,130,246,.4);
+  opacity:0;transition:opacity .3s;pointer-events:none;z-index:100;
+}
+#back-to-top.visible{opacity:1;pointer-events:auto}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .sidebar{display:none}
+  .doc-section{margin:12px;padding:20px}
+}
+
+/* PRISM OVERRIDE */
+.doc-section pre[class*=language-]{background:#1e293b;margin:12px 0;border-radius:8px;border:1px solid #334155}
+.doc-section code[class*=language-]{font-size:13px;line-height:1.6}
+.token.operator,.token.entity,.token.url,.language-css .token.string,.style .token.string{color:#93c5fd;background:transparent}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <div class="logo">
+      <div class="logo-icon">D</div>
+      <div>
+        <div class="logo-text">DAF Framework</div>
+        <div class="logo-version">v8.1.2 · Developer Docs</div>
+      </div>
+    </div>
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="nav-search" placeholder="Search docs…" autocomplete="off">
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label gs">Getting Started</div>
+    <a class="nav-link" onclick="scrollToSection('overview')"><span class="nav-icon">📋</span>Solution Overview</a>
+    <a class="nav-link" onclick="scrollToSection('architecture')"><span class="nav-icon">🏗️</span>Architecture</a>
+    <a class="nav-link" onclick="scrollToSection('hello-world')"><span class="nav-icon">👋</span>Hello World</a>
+    <a class="nav-link" onclick="scrollToSection('configuration')"><span class="nav-icon">⚙️</span>Configuration</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label core">Core Framework</div>
+    <a class="nav-link" onclick="scrollToSection('modules')"><span class="nav-icon">📦</span>Modules</a>
+    <a class="nav-link" onclick="scrollToSection('taskmodel')"><span class="nav-icon">🎯</span>Task Model</a>
+    <a class="nav-link" onclick="scrollToSection('tablemodel')"><span class="nav-icon">🗃️</span>Table Model</a>
+    <a class="nav-link" onclick="scrollToSection('metadata')"><span class="nav-icon">🏷️</span>Metadata</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label ui">UI &amp; Forms</div>
+    <a class="nav-link" onclick="scrollToSection('forms')"><span class="nav-icon">🖼️</span>Forms</a>
+    <a class="nav-link" onclick="scrollToSection('binding')"><span class="nav-icon">🔗</span>Binding</a>
+    <a class="nav-link" onclick="scrollToSection('frontend')"><span class="nav-icon">🌐</span>Frontend</a>
+    <a class="nav-link" onclick="scrollToSection('grid-definitions')"><span class="nav-icon">📊</span>Grid Definitions</a>
+    <a class="nav-link" onclick="scrollToSection('widgets')"><span class="nav-icon">🧩</span>Widgets</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label data">Data &amp; API</div>
+    <a class="nav-link" onclick="scrollToSection('api')"><span class="nav-icon">🔌</span>REST API</a>
+    <a class="nav-link" onclick="scrollToSection('filtering')"><span class="nav-icon">🔍</span>Filtering &amp; Paging</a>
+    <a class="nav-link" onclick="scrollToSection('change-tracking')"><span class="nav-icon">📜</span>Change Tracking</a>
+    <a class="nav-link" onclick="scrollToSection('files')"><span class="nav-icon">📁</span>Files &amp; Storage</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label tasks">Tasks &amp; Navigation</div>
+    <a class="nav-link" onclick="scrollToSection('tasks-menus')"><span class="nav-icon">📌</span>Tasks &amp; Menus</a>
+    <a class="nav-link" onclick="scrollToSection('categories')"><span class="nav-icon">🗂️</span>Categories</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label platform">Platform Features</div>
+    <a class="nav-link" onclick="scrollToSection('ai-features')"><span class="nav-icon">🤖</span>AI Features</a>
+    <a class="nav-link" onclick="scrollToSection('localization')"><span class="nav-icon">🌍</span>Localization</a>
+    <a class="nav-link" onclick="scrollToSection('providers')"><span class="nav-icon">🔧</span>Providers &amp; Resources</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label security">Security &amp; Ops</div>
+    <a class="nav-link" onclick="scrollToSection('security')"><span class="nav-icon">🔒</span>Users, Roles &amp; Security</a>
+    <a class="nav-link" onclick="scrollToSection('logging')"><span class="nav-icon">📝</span>Exceptions &amp; Logging</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="top-bar">
+    <div class="top-bar-title">DAF Framework Developer Documentation</div>
+    <div class="breadcrumb" id="breadcrumb"><span>Docs</span></div>
+  </div>
+
+  <div class="content-area" id="content-area">
+
+    <!-- SOLUTION OVERVIEW -->
+    <div class="doc-section" id="overview">
+      <div class="section-badge badge-gs">🚀 Getting Started</div>
+      <div id="render-overview"></div>
+    </div>
+
+    <!-- ARCHITECTURE -->
+    <div class="doc-section" id="architecture">
+      <div class="section-badge badge-gs">🚀 Getting Started</div>
+      <div id="render-architecture"></div>
+    </div>
+
+    <!-- HELLO WORLD -->
+    <div class="doc-section" id="hello-world">
+      <div class="section-badge badge-gs">🚀 Getting Started</div>
+      <div id="render-hello-world"></div>
+    </div>
+
+    <!-- CONFIGURATION -->
+    <div class="doc-section" id="configuration">
+      <div class="section-badge badge-gs">🚀 Getting Started</div>
+      <div id="render-configuration"></div>
+    </div>
+
+    <!-- MODULES -->
+    <div class="doc-section" id="modules">
+      <div class="section-badge badge-core">⚙️ Core Framework</div>
+      <div id="render-modules"></div>
+    </div>
+
+    <!-- TASK MODEL -->
+    <div class="doc-section" id="taskmodel">
+      <div class="section-badge badge-core">⚙️ Core Framework</div>
+      <div id="render-taskmodel"></div>
+    </div>
+
+    <!-- TABLE MODEL -->
+    <div class="doc-section" id="tablemodel">
+      <div class="section-badge badge-core">⚙️ Core Framework</div>
+      <div id="render-tablemodel"></div>
+    </div>
+
+    <!-- METADATA -->
+    <div class="doc-section" id="metadata">
+      <div class="section-badge badge-core">⚙️ Core Framework</div>
+      <div id="render-metadata"></div>
+    </div>
+
+    <!-- FORMS -->
+    <div class="doc-section" id="forms">
+      <div class="section-badge badge-ui">🖼️ UI &amp; Forms</div>
+      <div id="render-forms"></div>
+    </div>
+
+    <!-- BINDING -->
+    <div class="doc-section" id="binding">
+      <div class="section-badge badge-ui">🖼️ UI &amp; Forms</div>
+      <div id="render-binding"></div>
+    </div>
+
+    <!-- FRONTEND -->
+    <div class="doc-section" id="frontend">
+      <div class="section-badge badge-ui">🖼️ UI &amp; Forms</div>
+      <div id="render-frontend"></div>
+    </div>
+
+    <!-- GRID DEFINITIONS -->
+    <div class="doc-section" id="grid-definitions">
+      <div class="section-badge badge-ui">🖼️ UI &amp; Forms</div>
+      <div id="render-grid-definitions"></div>
+    </div>
+
+    <!-- WIDGETS -->
+    <div class="doc-section" id="widgets">
+      <div class="section-badge badge-ui">🖼️ UI &amp; Forms</div>
+      <div id="render-widgets"></div>
+    </div>
+
+    <!-- API -->
+    <div class="doc-section" id="api">
+      <div class="section-badge badge-data">📡 Data &amp; API</div>
+      <div id="render-api"></div>
+    </div>
+
+    <!-- FILTERING -->
+    <div class="doc-section" id="filtering">
+      <div class="section-badge badge-data">📡 Data &amp; API</div>
+      <div id="render-filtering"></div>
+    </div>
+
+    <!-- CHANGE TRACKING -->
+    <div class="doc-section" id="change-tracking">
+      <div class="section-badge badge-data">📡 Data &amp; API</div>
+      <div id="render-change-tracking"></div>
+    </div>
+
+    <!-- FILES -->
+    <div class="doc-section" id="files">
+      <div class="section-badge badge-data">📡 Data &amp; API</div>
+      <div id="render-files"></div>
+    </div>
+
+    <!-- TASKS & MENUS -->
+    <div class="doc-section" id="tasks-menus">
+      <div class="section-badge badge-tasks">📌 Tasks &amp; Navigation</div>
+      <div id="render-tasks-menus"></div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div class="doc-section" id="categories">
+      <div class="section-badge badge-tasks">📌 Tasks &amp; Navigation</div>
+      <div id="render-categories"></div>
+    </div>
+
+    <!-- AI FEATURES -->
+    <div class="doc-section" id="ai-features">
+      <div class="section-badge badge-platform">🤖 Platform Features</div>
+      <div id="render-ai-features"></div>
+    </div>
+
+    <!-- LOCALIZATION -->
+    <div class="doc-section" id="localization">
+      <div class="section-badge badge-platform">🤖 Platform Features</div>
+      <div id="render-localization"></div>
+    </div>
+
+    <!-- PROVIDERS -->
+    <div class="doc-section" id="providers">
+      <div class="section-badge badge-platform">🤖 Platform Features</div>
+      <div id="render-providers"></div>
+    </div>
+
+    <!-- SECURITY -->
+    <div class="doc-section" id="security">
+      <div class="section-badge badge-security">🔒 Security &amp; Ops</div>
+      <div id="render-security"></div>
+    </div>
+
+    <!-- LOGGING -->
+    <div class="doc-section" id="logging">
+      <div class="section-badge badge-security">🔒 Security &amp; Ops</div>
+      <div id="render-logging"></div>
+    </div>
+
+  </div><!-- /content-area -->
+</div><!-- /main -->
+
+<button id="back-to-top" title="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- ============================================================
+     MARKDOWN CONTENT — each script block feeds one section
+     ============================================================ -->
+
+<script type="text/markdown" data-target="render-overview">
+# Solution Overview
+
+**DAF** (GsoftApp.Framework) is a modular .NET 8 server platform that exposes data-management tasks, server-side forms, and AI-assisted helpers.
+
+## Technology
+- C# 12, .NET 8
+- Razor Pages web console (ASP.NET Core 8)
+- Layered architecture: Data Layer → Task/Form Layer → AI/Indexing Providers → Web Console
+
+## Key Projects
+
+| Project | Purpose |
+|---------|---------|
+| `GsoftApp.Framework.App.Common` | Server forms and task models (`BaseServerForm`, `BaseDataSheetTaskModel`, `AIAssistantTaskModel`) |
+| `GsoftApp.Framework.Data` | Table and data-model abstractions (`TableModel`, attachments, memory table) |
+| `GsoftApp.Framework.AI` | AI integration (`IAIProvider`, `AILogic`, `TableMetadataUtil`) |
+| `GsoftApp.Framework.Indexing` | Vector store and search adapters (`IVectorStore`) |
+| `GsoftApp.Framework.Storage.*` | File storage providers (Azure Blob, S3) |
+| `GsoftApp.Framework.WebConsole` | Razor Pages host |
+
+## Core Concepts
+
+**Session & Task System** — `clsSession` represents user context and permissions. `TaskService` constructs `BaseServerForm` instances for tasks.
+
+**Data Access** — `DbTables.Table(session, tableName)` provides table access. `TableModel` and `clsTableView` model table data consumed by task UIs.
+
+**AI Integration** — `IAIProvider` is the plug point for LLM backends. `AIAssistantTaskModel` registers safe tool methods that call server tasks under session security.
+
+**Indexing & Search** — Indexers push embeddings to `IVectorStore`; the assistant uses semantic search for retrieval.
+
+## Quick Start
+
+```bash
+# Build
+cd c:\Source\DAF
+dotnet build
+
+# Run web console
+cd GsoftApp.Framework.WebConsole
+dotnet run --launch-profile Development
+
+# Run tests
+dotnet test
+```
+
+## Security Notes
+- All data-changing operations invoked by AI tools require explicit user confirmation (`confirmed` flags).
+- Operations run under `clsSession` and respect permission checks via `Session.SecurityProvider`.
+</script>
+
+<script type="text/markdown" data-target="render-architecture">
+# High-Level Architecture
+
+**DAF** (GsoftApp.Framework) is a modular, enterprise-grade .NET 8 server platform. Plug in a database provider, LLM backend, and file storage backend — implement business logic as Task Models — and get a fully operational web management console.
+
+## Design Principles
+
+| Principle | Description |
+|-----------|-------------|
+| **Modularity** | Every capability (LLM, storage, DB, vector search, email) is behind an interface and swappable at config time |
+| **Convention over configuration** | Task Models are discovered from the database by type name; no manual wiring needed |
+| **AI-first** | The AI assistant is a first-class citizen with session-guarded access to all Task Models |
+| **Security by default** | All operations run under `clsSession`. Data-mutating AI operations require explicit user confirmation |
+| **Multi-tenancy** | Supports multiple isolated tenant environments via `DafApplicationContainer` |
+
+## Layered Architecture
+
+```
+┌─────────────────────────────────────────────────────┐
+│               Web Console (Razor Pages)              │
+├─────────────────────────────────────────────────────┤
+│                  App / Task Layer                    │
+│  BaseTaskModel · BaseSingleRowTaskModel              │
+│  BaseDataSheetTaskModel · BaseWizardTaskModel        │
+│  AIAssistantTaskModel (AI chat + MCP tools)          │
+├──────────────────┬──────────────────────────────────┤
+│  AI / Indexing   │         Data Layer               │
+│  IAIProvider     │  TableModel · clsTableView        │
+│  AILogic (OpenAI)│  DbTables · Metadata             │
+│  ClaudeAILogic   │  Attachments · ChangeHistory      │
+│  IVectorStore    │                                  │
+├──────────────────┴──────────────────────────────────┤
+│                  Common / Core                      │
+│  clsSession · ISecurityProvider · IFileProvider     │
+│  IDataAccess · IVectorStore · IAIProvider           │
+├─────────────────────────────────────────────────────┤
+│               Provider Implementations              │
+│  SQL Server · MySQL · SQLite · Excel                │
+│  Azure Blob · S3 · Local FS                         │
+│  Azure Cognitive Search · SQLite Vector             │
+│  Azure OpenAI · Claude (Anthropic SDK)              │
+└─────────────────────────────────────────────────────┘
+```
+
+## Task Model Hierarchy
+
+```
+BaseTaskModel
+├── BaseSingleRowTaskModel    — single-record forms
+├── BaseDataSheetTaskModel    — multi-row editable grids
+│   └── BaseDataListTaskModel — read-only grids
+├── BaseWizardTaskModel       — multi-step wizards
+└── AIAssistantTaskModel      — AI chat + tool access
+```
+
+## Provider Matrix
+
+| Capability | Interface | Implementations |
+|------------|-----------|----------------|
+| Database | `IDataAccess` | SQL Server, MySQL, SQLite, Excel |
+| File storage | `IFileProvider` | Azure Blob, AWS S3, local filesystem |
+| Vector search | `IVectorStore` | Azure Cognitive Search, SQLite |
+| LLM / AI | `IAIProvider` | Azure OpenAI, Claude |
+| Email | `IEmailProvider` | SMTP |
+| Message broker | `IMessageBroker` | Kafka |
+
+## Key Dependencies
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `Azure.AI.OpenAI` | 2.8.0-beta.1 | Azure OpenAI client |
+| `Anthropic.SDK` | 5.10.0 | Claude AI client |
+| `ModelContextProtocol` | 0.3.0-preview.2 | MCP server protocol |
+| `Microsoft.SemanticKernel.Core` | 1.72.0 | Semantic Kernel tools |
+| `Azure.Storage.Blobs` | 12.27.0 | Azure Blob Storage |
+| `Microsoft.AspNetCore.Identity.EntityFrameworkCore` | 8.0.23 | ASP.NET Identity |
+
+## Project Statistics
+
+| Metric | Count |
+|--------|-------|
+| Framework libraries | ~54 |
+| Business app modules | 7 |
+| Test suites | 8 |
+| Database providers | 4 |
+| LLM backends | 2 |
+| Cloud storage providers | 2 |
+</script>
+
+<script type="text/markdown" data-target="render-hello-world">
+# Hello World Task
+
+A step-by-step example that creates a minimal server-side task model with an in-memory table and a "Say Hello" command.
+
+## 1. Create the Task Model
+
+Create `HelloWorldTaskModel.cs`:
+
+```csharp
+using System;
+using System.Data;
+using GsoftApp.Framework.App.Common;
+using GsoftApp.Framework.Data;
+
+namespace GsoftApp.Framework.App.Common.TaskModels
+{
+    public class HelloWorldTaskModel : BaseTaskModel
+    {
+        public HelloWorldTaskModel(clsSession session) : base(session) { }
+
+        protected override void CreateDataContext()
+        {
+            var dt = new DataTable();
+            dt.Columns.Add("MessageId");
+            dt.Columns.Add("Message");
+
+            var tbl = new TableModel(Session);
+            tbl.OfflineMode = true;
+            tbl.NoMetadata = true;
+            tbl.Init("UserMessages", dt);
+            tbl.PrimaryKey = "MessageId";
+
+            var view = new clsTableView(tbl);
+            busObjects.Add("MAIN", view);
+            ResetMessages();
+        }
+
+        protected override void OnInitializeCommands()
+        {
+            base.OnInitializeCommands();
+            AddCommand("SayHello");
+        }
+
+        protected override string EvalCommandText(clsRowCommand cmd, RowModel row)
+        {
+            if (cmd.Name == "SayHello") return "Say Hello";
+            return base.EvalCommandText(cmd, row);
+        }
+
+        protected override clsObjectEx OnDoCommandExecute(clsRowCommand cmd, RowModel row, clsObjectEx args)
+        {
+            if (cmd.Name == "SayHello")
+            {
+                var user = Session.DisplayName ?? Session.UserID?.ToString() ?? "user";
+                MainView.AddNewRow(
+                    new[] { "MessageId", "Message" },
+                    new[] { Guid.NewGuid().ToString(), $"Hello, {user}!" });
+                MainView.AcceptChanges();
+                return null;
+            }
+            return base.OnDoCommandExecute(cmd, row, args);
+        }
+
+        private void ResetMessages()
+        {
+            MainView.TableInstance.Clear();
+            MainView.AcceptChanges();
+            MainView.AddNewRow(
+                new[] { "MessageId", "Message" },
+                new[] { Guid.NewGuid().ToString(), "Welcome to HelloWorld task." });
+            MainView.AcceptChanges();
+        }
+    }
+}
+```
+
+## 2. Register the Task
+
+```csharp
+// Inside a module's updateAction:
+var taskTable = DbTables.Table(userSession, TaskTableNames.Task);
+var row = taskTable.NewRow(
+    new[] { "TaskDefID", "TaskName", "MainFormName", "TaskType", "StartupParam" },
+    new object[] {
+        Guid.NewGuid().ToString(),
+        "HelloWorld",
+        TaskTemplateNames.SingleRow,
+        1,
+        null
+    });
+taskTable.Save(row);
+```
+
+## 3. Run and Test
+
+1. Launch: `cd GsoftApp.Framework.WebConsole && dotnet run`
+2. Find "HelloWorld" in the task list and run it
+3. Click "Say Hello" — a greeting row appears in `UserMessages`
+
+## Troubleshooting
+
+- **Task not visible?** Confirm the `DafTask_GMS` row exists and `MainFormName` matches a supported template.
+- **Constructor error?** Check `BaseTaskModel` signature — it always takes `(clsSession session)`.
+- **Missing AddCommand?** Use `AddCommand` from `TableModel`; it works the same way in task models.
+</script>
+
+<script type="text/markdown" data-target="render-configuration">
+# Configuration Guide
+
+## 1. Configuration Sources and Merge Order
+
+DAF uses the standard ASP.NET Core configuration pipeline. Later sources override earlier ones:
+
+```
+1. appsettings.json                 ← base defaults
+2. appsettings.{Environment}.json   ← environment overlay
+3. Environment variables            ← runtime overrides
+4. Command-line arguments           ← startup overrides
+5. DafDataSource_GMS                ← runtime dynamic data source config
+6. DafProviderResource_GMS          ← AI / translation / storage provider config
+7. DafSystemSettings_GMS            ← admin-managed global settings
+8. DafUserSettings_GMS              ← per-user preferences
+```
+
+## 2. `appsettings.json` — Complete Reference
+
+```json
+{
+  "AppSettings": {
+    "DataProvider": "GsoftApp.Framework.Dal.SqlClient.SqlClientDal,GsoftApp.Framework.Dal.SqlClient",
+    "ILogger": "GsoftApp.Framework.Common.Logging.TraceLogger,GsoftApp.Framework.Common",
+    "LogLevel": 4,
+    "LogFilePath": "C:\\logs\\MyApp\\TraceLog.txt",
+    "Email-FromEmail": "sender@example.com"
+  },
+  "ConnectionStrings": {
+    "Default": "Data Source=.;Integrated Security=SSPI;Initial Catalog=daf-db;MultipleActiveResultSets=true",
+    "IdentityDbContextConnection": "Data Source=.;Integrated Security=SSPI;Initial Catalog=daf-identity;..."
+  },
+  "daf": {
+    "AdminUserName": "admin@example.com",
+    "ApplicationName": "My DAF Application",
+    "AppKey": "myapp",
+    "FileSystemProviderRootPath": "C:\\DafFiles",
+    "SQLiteDatabaseFolder": "C:\\DafFiles",
+    "Authentication": {
+      "Schema": "Identity",
+      "AzureAd": {
+        "Instance": "https://login.microsoftonline.com/",
+        "ClientId": "...", "TenantId": "common"
+      }
+    },
+    "ai": {
+      "OpenAI": {
+        "Endpoint": "https://your-aoai.openai.azure.com/",
+        "ApiKey": "...",
+        "ModelName": "gpt-4-dpl",
+        "EmbedModelName": "text-embedding-ada-002"
+      }
+    },
+    "MultiTenantHostEnabled": false
+  },
+  "smtpClientSettings": {
+    "host": "smtp.gmail.com", "port": 587,
+    "enableSsl": "true", "userName": "no-reply@example.com", "password": "..."
+  }
+}
+```
+
+## 3. Section Reference
+
+### AppSettings
+
+| Key | Purpose |
+|-----|---------|
+| `DataProvider` | The `IDataAccess` implementation (SqlClient, MySql, SQLite) |
+| `ILogger` | Logger implementation (TraceLogger or DotNetLogger) |
+| `LogLevel` | 0=None, 1=Error, 2=Warn, 3=Debug, 4=Info, 5=Verbose |
+| `LogFilePath` | Destination file for TraceLogger |
+
+### Authentication Schemas
+
+| Value | Meaning |
+|-------|---------|
+| `"Identity"` | ASP.NET Core Identity with social providers |
+| `"AzureAD"` | Azure Active Directory / Entra ID via OIDC |
+| `"dummy"` | No authentication (dev/test only) |
+
+## 4. Reading Configuration in Code
+
+```csharp
+var app = DafApplication.Current;
+
+// Full colon-separated path
+string endpoint = app.AppSettings.Get("daf:ai:OpenAI:Endpoint");
+string dbPath   = app.AppSettings.Get("daf:SQLiteDatabaseFolder");
+
+// From session
+string appName = session.Application.AppSettings.Get("daf:ApplicationName");
+```
+
+## 5. Database-Backed Configuration
+
+| Table | Purpose |
+|-------|---------|
+| `DafDataSource_GMS` | Named database connections |
+| `DafProviderResource_GMS` | AI / storage / translation providers |
+| `DafSystemSettings_GMS` | Global defaults (default AI, skin, container) |
+| `DafUserSettings_GMS` | Per-user preferences (language, skin, menu) |
+
+## 6. Configuration Checklist
+
+### Minimum Required
+- [ ] `ConnectionStrings:Default` — primary database connection
+- [ ] `daf:AppKey` — unique application identifier
+- [ ] `daf:ApplicationName` — display name
+- [ ] `daf:AdminUserName` — bootstrap admin username
+- [ ] `daf:Authentication:Schema` — auth mode
+- [ ] `daf:FileSystemProviderRootPath` — writable directory for file uploads
+
+### AI Features
+- [ ] `daf:ai:OpenAI:Endpoint` — Azure OpenAI endpoint
+- [ ] `daf:ai:OpenAI:ApiKey` — API key
+- [ ] `daf:ai:OpenAI:ModelName` — chat model deployment
+- [ ] `daf:ai:OpenAI:EmbedModelName` — embedding model (for semantic search)
+- [ ] `daf:SQLiteDatabaseFolder` — vector store DB directory
+</script>
+
+<script type="text/markdown" data-target="render-modules">
+# Modules Developer Guide
+
+## 1. What Is a Module?
+
+A **module** is a self-contained unit of functionality that installs itself into the DAF database. Each module has a name and version. At startup, the framework runs every registered module, which compares its required version against the installed version and applies pending upgrades — creating tables, registering classes, seeding data, installing forms.
+
+**Benefits:**
+- A fresh database is built entirely by the module pipeline on first startup
+- Existing databases are safely upgraded when a new module version ships
+- No manual SQL migration scripts needed
+
+## 2. Key Interfaces
+
+```csharp
+public interface IModule
+{
+    string Name { get; }
+    bool WasAlreadyInstalled { get; }
+    string EnsureVersion(clsSession session, string version);
+}
+```
+
+## 3. Creating a Module
+
+All modules extend `BaseModule`:
+
+```csharp
+public class InventoryModule : BaseModule
+{
+    public override string Name => "MyCompany-Inventory";
+
+    protected override string DoEnsureVersion(string version)
+    {
+        var dal = userSession.DAL;
+        var taskTable = DbTables.Table(userSession, TaskTableNames.Task);
+        var menuTable = DbTables.Table(userSession, TaskTableNames.Menu);
+
+        // ─── Version 1.0.0 ─────────────────────────────────────
+        var tmpVersion = "1.0.0";
+
+        EnsureRegisterClassName<InventoryItemTable>("InventoryItem");
+
+        EnsureModuleVersion(tmpVersion,
+            () => {
+                // Pre-conditions (always run)
+                EnsureModule(ModuleNames.Core, "1.0.0");
+                EnsureModule(ModuleNames.DefaultMenuProvider, "1.0.0");
+            },
+            () => {
+                // Install (only runs if upgrading from below 1.0.0)
+                dal.CreateTable("InventoryItem", new List<clsColumn>
+                {
+                    new clsColumn("", "ItemKey")  { DataType = BusDataType.AlphaNum, Length = 40, Domain = DomainNames.PK },
+                    new clsColumn("", "ItemName") { DataType = BusDataType.AlphaNum, Length = 100, IsRequired = true },
+                    new clsColumn("", "UnitCost") { DataType = BusDataType.Numeric },
+                    new clsColumn("", "IsActive") { DataType = BusDataType.YesNo, DefaultValue = true },
+                });
+
+                AddFolderMenu(menuTable, 2001, "Inventory", 30);
+                AddTaskAndMenu(taskTable, menuTable, "INV_ITEMS", "Inventory Items",
+                    parentMenuId: 2001, tablelogicalName: "InventoryItem");
+            });
+        _version = tmpVersion;
+
+        // ─── Version 1.1.0 ─────────────────────────────────────
+        tmpVersion = "1.1.0";
+        EnsureModuleVersion(tmpVersion, null, () => {
+            dal.AddColumn(new clsColumn("InventoryItem", "LocationCode")
+            {
+                DataType = BusDataType.AlphaNum, Length = 20
+            });
+        });
+        _version = tmpVersion;
+
+        return _version;
+    }
+}
+```
+
+Register in `Startup.cs`:
+
+```csharp
+services.AddDaf(Configuration, (app) =>
+{
+    app.CustomModules.Add(new InventoryModule());
+});
+```
+
+## 4. `EnsureModuleVersion` — The Core Pattern
+
+```csharp
+EnsureModuleVersion(
+    version,       // "1.2.0" — version being installed
+    demandAction,  // pre-conditions; always run even if already installed
+    updateAction   // actual work; skipped if already at this version
+);
+```
+
+**Always assign `_version = tmpVersion` after each block** — even when `updateAction` is null.
+
+## 5. Helper Methods
+
+| Method | Purpose |
+|--------|---------|
+| `EnsureRegisterClassName<T>("Name")` | Register a logical name → CLR type |
+| `EnsureModule(name, minVersion)` | Assert dependency module is installed |
+| `AddTaskAndMenu(...)` | Create task row + menu item in one call |
+| `AddFolderMenu(menuTable, id, name, seq)` | Add a folder to the menu tree |
+| `InstallEmbeddedForm("FormName")` | Install a Razor form from embedded resources |
+| `AddStaticResourceFromResources("icon.png", type)` | Install an image/icon |
+
+## 6. Built-in Framework Modules
+
+| Module | What it installs |
+|--------|-----------------|
+| `Core` | All core tables, form templates, class registrations |
+| `DefaultMenuProvider` | `DafMenu_GMS`, `DafMenuDef_GMS` |
+| `DefaultMetaDataProvider` | `DafTable_GMS`, `DafColumn_GMS`, `DafListVal_GMS` |
+| `Administration` | Users, roles, permissions, default admin user |
+| `DefaultGridDefProvider` | Grid definition tables |
+
+## 7. Module Checklist
+
+- [ ] Extend `BaseModule`; give it a unique `Name` constant
+- [ ] Implement `DoEnsureVersion` with one `EnsureModuleVersion` block per schema milestone
+- [ ] In the first version's `demandAction`, call `EnsureModule` for all dependencies
+- [ ] Use `EnsureRegisterClassName<T>` for every `TableModel` subclass your module introduces
+- [ ] Always assign `_version = tmpVersion` after each block
+- [ ] Add the module to `app.CustomModules` in `Startup.cs`
+- [ ] For subsequent changes, add a **new version block** — never modify an existing version's `updateAction`
+</script>
+
+<script type="text/markdown" data-target="render-taskmodel">
+# Task Model Developer Guide
+
+## 1. What Is a Task Model?
+
+A **Task Model** is the server-side controller for one screen (task) in the web console. It owns:
+
+- The data views (`busObjects`) that the UI binds to
+- The commands (toolbar buttons, row actions) the user can invoke
+- The initialization logic that decides what data to load
+
+## 2. Task Model Hierarchy
+
+```
+BaseTaskModel
+├── BaseSingleRowTaskModel      — single-record form (master-detail tabs)
+├── BaseDataSheetTaskModel      — editable multi-row grid
+│   └── BaseDataListTaskModel   — read-only grid variant
+├── BaseWizardTaskModel         — multi-step wizard
+└── BaseRowBrowserTaskModel     — browse rows inline
+```
+
+## 3. Registration
+
+```csharp
+var taskTable = DbTables.Table(session, TaskTableNames.Task);
+taskTable.Save(taskTable.NewRow(
+    new[] { "TaskDefID", "TaskName", "MainFormName", "TaskType", "StartupParam" },
+    new object[] { "PROD_TASK_001", "Product", TaskTemplateNames.Datasheet, 1, "TABLE:Product" }
+));
+```
+
+## 4. Initialization Pipeline
+
+```
+Initialize(input)
+  ├── CreateTaskModelView()   → creates the "p" view
+  ├── PreInit()               → merges StartupContext params
+  ├── Init()
+  │   └── CreateDataContext() ← YOUR MAIN OVERRIDE POINT
+  ├── PostInit()              → applies AddOrUpdateMode, KeyValue, IsReadOnly
+  └── PlayInput()             → executes scripted startup actions
+```
+
+## 5. `CreateDataContext()` — Building the Data Context
+
+```csharp
+// Pattern 1: Use a registered table
+protected override void CreateDataContext()
+{
+    TaskState.Input["MainTableName"] = "Product";
+    base.CreateDataContext(); // creates busObjects["MAIN"]
+}
+
+// Pattern 2: Custom TableModel subclass
+protected override void CreateDataContext()
+{
+    var orderTable = new OrderTable(Session);
+    var view = new clsTableView(orderTable);
+    busObjects.Add("MAIN", view);
+    _viewsToDispose.Add(view);
+
+    var linesTable = DbTables.Table(Session, "OrderLine");
+    var linesView = new clsTableView(linesTable);
+    busObjects.Add("Lines", linesView);
+    _viewsToDispose.Add(linesView);
+}
+
+// Pattern 3: In-memory table
+protected override void CreateDataContext()
+{
+    var dt = new DataTable();
+    dt.Columns.Add("Id"); dt.Columns.Add("Description");
+    var tbl = new TableModel(Session);
+    tbl.OfflineMode = true; tbl.NoMetadata = true;
+    tbl.Init("SummaryLines", dt); tbl.PrimaryKey = "Id";
+    var view = new clsTableView(tbl);
+    busObjects.Add("MAIN", view);
+    _viewsToDispose.Add(view);
+}
+```
+
+## 6. Commands
+
+```csharp
+// Register
+protected override void OnInitializeCommands()
+{
+    base.OnInitializeCommands();
+    AddCommand("Approve");
+    AddCommand("Reject");
+}
+
+// Handle
+public override void ExecuteCommand(string commandName)
+{
+    switch (commandName)
+    {
+        case "Approve": Approve(); break;
+        case "Reject":  Reject(); break;
+        default: base.ExecuteCommand(commandName); break;
+    }
+}
+
+// Label
+protected override string EvalCommandText(clsRowCommand cmd, RowModel row)
+{
+    if (cmd.Name == "Approve") return LocalText("Approve");
+    return base.EvalCommandText(cmd, row);
+}
+
+// Visibility
+protected override bool EvalCommandVisible(clsRowCommand cmd, RowModel row)
+{
+    if (cmd.Name == "Approve")
+        return IsSupervisor && ConversionUtil.ToString(row?.GetValue("Status")) == "Draft";
+    return base.EvalCommandVisible(cmd, row);
+}
+```
+
+## 7. Opening Child Tasks
+
+```csharp
+Session.RunChildTask("SingleRowMaintForm", new clsObjectEx(new Dictionary<string, object>
+{
+    { "StartupContext", "TABLE:Product" },
+    { "AddOrUpdateMode", "Add" },
+    { "TaskName", "Add Product" },
+    { "InitRowValues", new clsObjectEx().With("CategoryId", currentCategoryId) }
+})).ContinueWith(result =>
+{
+    if (ConversionUtil.ToBoolean(result?.Result?["Saved"]))
+        MainView.Refresh();
+});
+```
+
+## 8. UI Interactions
+
+```csharp
+// Message box (awaitable)
+var answer = await UIShowMessageBox(
+    "Delete this record?", "Confirm",
+    clsMessageBoxButtons.YesNo(), clsMessageBoxIcon.Question, "No");
+if (answer == clsMessageBoxButtons.Yes) MainView.DeleteCurrentRow();
+
+// Progress indicator
+var progress = Session.Progress();
+progress.Message = "Importing records…";
+foreach (var item in items) { Process(item); progress.Percentage += step; }
+progress.Percentage = 100;
+```
+
+## 9. Task Model Checklist
+
+- [ ] Extend the appropriate base class (`BaseSingleRowTaskModel`, `BaseDataSheetTaskModel`, etc.)
+- [ ] Override `CreateDataContext()` — set up `busObjects`, add views to `_viewsToDispose`
+- [ ] Override `PostInit()` for startup-mode logic (Add defaults, key filter)
+- [ ] Override `OnInitializeCommands()` + `ExecuteCommand()` for custom commands
+- [ ] Override `EvalCommandText` and `EvalCommandVisible` for labels and visibility
+- [ ] Place return values in `TaskState.Output` before closing
+- [ ] Register the task in the `DafTask_GMS` table with correct `MainFormName`
+</script>
+
+<script type="text/markdown" data-target="render-tablemodel">
+# Table Model Developer Guide
+
+## 1. What Is a TableModel?
+
+`TableModel` is the base class for all data tables. It wraps a database table (or in-memory `DataTable`) and owns the full lifecycle: loading, validating, saving, deleting, tracking history, and driving the UI.
+
+```
+TableModel
+└── BaseTaskModel
+    ├── BaseSingleRowTaskModel
+    ├── BaseDataSheetTaskModel
+    └── AIAssistantTaskModel
+```
+
+## 2. Creating a Standalone TableModel
+
+```csharp
+public class ProductTable : TableModel
+{
+    public ProductTable(clsSession session) : base(session)
+    {
+        m_MainTableName  = "Product";
+        m_UniqueKey      = "ProductId";
+        m_NaturalColumns = "ProductCode";
+        Init();
+    }
+}
+```
+
+Use `DbTables.Table(session, "Product")` to resolve the registered subclass at runtime.
+
+## 3. Override Reference
+
+### Column Metadata
+
+```csharp
+protected override void OnOverrideColumnInfo(clsColumn oColumn)
+{
+    base.OnOverrideColumnInfo(oColumn);
+    switch (oColumn.ColumnName)
+    {
+        case "Price":
+            oColumn.DataType = BusDataType.Numeric;
+            oColumn.DecimalPlaces = 2; oColumn.MinValue = 0;
+            break;
+        case "CategoryId":
+            oColumn.Domain = DomainNames.FK;
+            oColumn.PrimaryTableInfo = new clsPrimaryTableInfo
+            { TableName = "Category", IDColumnName = "CategoryId", KeyColumnName = "CategoryCode" };
+            break;
+        case "Photo": oColumn.Domain = DomainNames.Picture; break;
+        case "Notes": oColumn.Domain = DomainNames.TextArea; break;
+    }
+}
+```
+
+### Common Domain Values
+
+| Domain | Meaning |
+|--------|---------|
+| `DomainNames.PK` | Primary key |
+| `DomainNames.FK` | Foreign key (lookup picker) |
+| `DomainNames.YesNo` | Boolean checkbox |
+| `DomainNames.StaticList` | Dropdown from a fixed list |
+| `DomainNames.DateAndTime` | DateTime picker |
+| `DomainNames.Picture` | Image / file attachment |
+| `DomainNames.CreateDate/User` | Auto-set on insert |
+| `DomainNames.UpdateDate/User` | Auto-set on every save |
+
+### Relationships
+
+```csharp
+// FK relationship
+protected override void OnInitLinkSources()
+{
+    base.OnInitLinkSources();
+    AddLinkSource("CategoryId", "Category", "CategoryId");
+}
+
+// Child table (one-to-many)
+protected override void OnInitChildTables()
+{
+    base.OnInitChildTables();
+    AddChildTable("OrderLine", "Lines", "OrderId", "OrderId");
+    // One-to-one (merged onto parent view):
+    AddChildTable("ProductDetail", "Detail", "ProductId", "ProductId");
+    MergeChildTable("Detail");
+}
+```
+
+### Validation
+
+```csharp
+protected internal override void OnValidateField(RowModel row, string columnName, object value)
+{
+    base.OnValidateField(row, columnName, value);
+    if (columnName == "ExpiryDate" && ConversionUtil.ToDateTime(value) < DateTime.Today)
+        throw new Exception("Expiry date cannot be in the past.");
+}
+```
+
+### Cascade Logic
+
+```csharp
+public override void OnColumnValueChanged(RowColumnChangedEventArgs e)
+{
+    base.OnColumnValueChanged(e);
+    if (e.ColumnName == "Quantity" || e.ColumnName == "UnitPrice")
+    {
+        var qty   = ConversionUtil.ToDecimal(e.Row.GetValue("Quantity"));
+        var price = ConversionUtil.ToDecimal(e.Row.GetValue("UnitPrice"));
+        e.Row.SetValue("TotalAmount", qty * price);
+    }
+}
+```
+
+### Save/Delete Hooks
+
+```csharp
+protected override void OnDB_BeforeInsertRow(RowModel row)
+{
+    base.OnDB_BeforeInsertRow(row);
+    row.SetValue("OrderNumber", GenerateOrderNumber());
+}
+
+protected override void OnDB_BeforeDeleteRow(RowModel row)
+{
+    base.OnDB_BeforeDeleteRow(row);
+    var count = DAL.GetScalar<int>("SELECT COUNT(*) FROM Shipment WHERE OrderId=@Id",
+                                   new { Id = row.GetValue("OrderId") });
+    if (count > 0) throw new Exception("Cannot delete: this order has shipments.");
+}
+```
+
+## 4. Interface Manager — Declarative Read-Only Rules
+
+The **Interface Manager** is the preferred way to express read-only rules when conditions are data-driven.
+
+```csharp
+// Step 1 — register named reasons
+protected override void InitializeInterfaceLogicReasons()
+{
+    base.InitializeInterfaceLogicReasons();
+    InterfaceManager.LogicReasons.Add("OrderConfirmed",
+        new clsLogicReason("OrderConfirmed", LocalText("Order is confirmed."),
+            (sender, row, col) => ConversionUtil.ToString(row.GetValue("Status")) == "C",
+            null));
+}
+
+// Step 2 — wire reasons to fields
+protected override void InitFieldReadOnlyReasons(string columnName)
+{
+    base.InitFieldReadOnlyReasons(columnName);
+    if (columnName != "Status")
+        InterfaceManager.AddFieldReadOnlyReason(columnName,
+            InterfaceManager.LogicReasons["OrderConfirmed"]);
+}
+
+// Step 3 — trigger re-evaluation when relevant data changes
+public override void OnColumnValueChanged(RowColumnChangedEventArgs e)
+{
+    base.OnColumnValueChanged(e);
+    if (e.ColumnName == "Status")
+        InterfaceManager.LogicReasons["OrderConfirmed"].Reset(e.Row);
+}
+```
+
+## 5. Transactions
+
+```csharp
+using (var uow = new UnitOfWork(Session))
+{
+    var orders    = DbTables.Table(Session, "Order");
+    var shipments = DbTables.Table(Session, "Shipment");
+    orders.UnitOfWork    = uow;
+    shipments.UnitOfWork = uow;
+    orders.Save(orderRow);
+    shipments.Save(shipmentRow);
+    uow.Commit(); // both writes commit together
+}
+```
+
+## 6. TableModel Checklist
+
+- [ ] Set `m_MainTableName`, `m_UniqueKey`, `m_NaturalColumns`; call `Init()`
+- [ ] Override `OnOverrideColumnInfo` for domains, captions, types
+- [ ] Override `OnInitLinkSources` for every FK column
+- [ ] Override `OnInitChildTables` for one-to-many relationships
+- [ ] Override `SetDefaultFilter` for permanent row restrictions
+- [ ] Override `OnColumnValueChanged` for cascade/derived-field logic
+- [ ] Override `OnValidateField` for cross-field validation
+- [ ] Override `OnDB_Before*` hooks for side effects around DB writes
+</script>
+
+<script type="text/markdown" data-target="render-metadata">
+# Metadata Developer Guide
+
+## 1. What Is Metadata?
+
+In DAF, **metadata** is the schema definition of a domain table stored in the database at runtime — not hardcoded in C# files. It defines captions, data types, domains, required flags, FK relationships, child tables, and more.
+
+### Two Ways to Define Column Behavior
+
+| Approach | When to use |
+|----------|-------------|
+| **Database metadata** (`DafTable_GMS` / `DafColumn_GMS`) | Declarative, admin-editable; standard for domain tables |
+| **Code overrides** (`OnOverrideColumnInfo`) | Fine-grained control; takes precedence over stored metadata |
+
+## 2. Metadata Tables
+
+| Table | Purpose |
+|-------|---------|
+| `DafTable_GMS` | One row per domain table; keys, flags, parent-table relationship |
+| `DafColumn_GMS` | One row per column; domain, data type, caption, validation rules |
+| `DafChildTable_GMS` | Declares one-to-many child tables |
+| `DafRelation_GMS` | Column-level join mapping between parent and child |
+| `DafListVal_GMS` | Static list items for `DomainNames.StaticList` columns |
+
+## 3. Table-Level Metadata (`DafTable_GMS`)
+
+| Column | Purpose |
+|--------|---------|
+| `TableName` | Exact DB table name (PK) |
+| `UniqueKey` | Primary key column name(s), comma-separated |
+| `NaturalKey` | Human-readable unique identifier |
+| `SafeUpdates` | Allow AI assistant to write to this table |
+| `AllowApi` | Expose via REST API |
+| `TrackChanges` | Log every insert/update/delete |
+| `AuditChanges` | Merge full before/after audit trail |
+
+Setting flags in code:
+
+```csharp
+protected override void MetaDataPopulateTableInfo(ref clsTableInfo oTableInfo)
+{
+    base.MetaDataPopulateTableInfo(ref oTableInfo);
+    oTableInfo.TrackChanges = true;
+    oTableInfo.AllowApi     = true;
+    oTableInfo.SafeUpdates  = true;
+}
+```
+
+## 4. Column-Level Metadata (`DafColumn_GMS`)
+
+| Column | Purpose |
+|--------|---------|
+| `ColumnName` | Exact DB column name |
+| `DataType` | `AlphaNum`, `Numeric`, `YesNo`, `DateTime` |
+| `DomainID` | Semantic domain (see below) |
+| `IsRequired` | Fail validation if empty |
+| `IsReadOnly` | Always read-only |
+| `MaxDataLength` | Max character length |
+| `PrimaryTableName` | FK target table (for `DomainNames.FK`) |
+
+## 5. Domain Names — Column Semantic Types
+
+| Constant | Effect |
+|----------|--------|
+| `DomainNames.PK` | Primary key; hidden by default |
+| `DomainNames.FK` | Foreign key lookup with picker |
+| `DomainNames.StaticList` | Dropdown from `DafListVal_GMS` |
+| `DomainNames.YesNo` | Checkbox (stored 0/1) |
+| `DomainNames.DateAndTime` | Date-time picker |
+| `DomainNames.Picture` | Image / file attachment |
+| `DomainNames.TextArea` | Multi-line text input |
+| `DomainNames.Formula` | Calculated column |
+| `DomainNames.Category` | Hierarchical category picker |
+| `DomainNames.CreateDate` | Auto-set UTC on insert; read-only |
+| `DomainNames.UpdateDate` | Auto-set UTC on every save |
+| `DomainNames.Password` | Masked input |
+
+## 6. Creating Metadata Programmatically
+
+```csharp
+var metaTbl = DbTables.Table(Session, MetadataTables.TableInfo);
+var newRow  = metaTbl.NewRow();
+newRow.SetValue(TableInfoColumnNames.TableName,      "Invoice");
+newRow.SetValue(TableInfoColumnNames.UniqueKey,      "InvoiceKey");
+newRow.SetValue(TableInfoColumnNames.NaturalKey,     "InvoiceNumber");
+newRow.SetValue(TableInfoColumnNames.SafeUpdates,    true);
+
+var colChild = newRow.ChildTable(TableInfo.ChildTableName.ColumnInfo);
+colChild.AddNewRow(
+    new[] { "ColumnName", "CaptionStringNo", "DataType", "DomainID", "DoNotDisplayUI" },
+    new object[] { "InvoiceKey", "Invoice", BusDataType.AlphaNum, DomainNames.PK, true });
+colChild.AddNewRow(
+    new[] { "ColumnName", "CaptionStringNo", "DataType", "MaxDataLength", "IsRequired" },
+    new object[] { "InvoiceNumber", "Number", BusDataType.AlphaNum, 20, true });
+
+// Save — automatically creates the physical DB table
+metaTbl.Save(newRow);
+```
+
+## 7. Metadata Runtime Flow
+
+```
+DbTables.Table(session, "Product")
+  └── TableModel.Init()
+        ├── MetaDataPopulateTableInfo()    ← code hook (before DB)
+        ├── IMetaDataProvider.PopulateTableInfo()  ← reads DafTable_GMS
+        ├── OpenMainTable()                ← loads column schema
+        ├── For each column:
+        │     ├── IMetaDataProvider.PopulateColumnInfo()  ← reads DafColumn_GMS
+        │     └── OnOverrideColumnInfo()   ← code hook (after DB)
+        └── IMetaDataProvider.PopulateChildTableInfo()
+```
+
+## 8. Metadata Checklist
+
+- [ ] For every new domain table: insert into `DafTable_GMS` with `TableName`, `UniqueKey`, `NaturalKey`
+- [ ] For every column: insert into `DafColumn_GMS` with `DataType`, `DomainID`, `CaptionStringNo`
+- [ ] For FK columns: set `PrimaryTableName`, `PrimaryTableKeyColumnName`, `PrimaryTableIDColumnName`, `LookupID`
+- [ ] For static lists: add items to `DafListVal_GMS` or override `OnOverrideValidList`
+- [ ] Set `SafeUpdates = true` for tables the AI assistant should write to
+- [ ] Set `AllowApi = true` for tables reachable via the REST API
+- [ ] Use `NoMetadata = true` for in-memory tables that should not touch `DafTable_GMS`
+</script>
+
+<script type="text/markdown" data-target="render-forms">
+# Forms Developer Guide
+
+## 1. What Is a Form in DAF?
+
+A **form** is the combination of three things:
+
+| Layer | What it is |
+|-------|-----------|
+| **Server form** | `BaseServerForm` subclass — orchestrates lifecycle, binds task models to the UI |
+| **Task model** | `BaseTaskModel` subclass — owns all business logic and data views |
+| **Form source** | HTML markup with binding declarations — stored in `DafForm_GMS` |
+
+## 2. Form Source Code (`DafForm_GMS`)
+
+Form HTML is stored in the `DafForm_GMS` database table.
+
+### Token Substitution
+
+| Token | Replaced with |
+|-------|--------------|
+| `{DafSessionId}` | Active session ID |
+| `{DafFormId}` | Unique form instance GUID |
+| `{DafFormName}` | Form template name |
+| `{DafStylesheets}` | CSS `<link>` tags |
+| `{DafScripts}` | `<script>` tags |
+
+### Installing Forms in a Module
+
+```csharp
+InstallEmbeddedForm("DatasheetForm");                         // from current assembly
+InstallEmbeddedForm("MyCustomForm", typeof(MyModule));        // from specific assembly
+AddUpdateFormSourceCode("MyCustomForm", formHtmlString);      // from string
+```
+
+## 3. Skin / Theme Overrides
+
+| Table | Purpose |
+|-------|---------|
+| `DafSkin_GMS` | Named skin definitions |
+| `DafSkinFormOvrd_GMS` | Maps `(SkinKey, FormName) → OvrdFormName` |
+
+Resolution order: user skin → system default skin → form HTML.
+
+## 4. `BaseServerForm` — Command Processing
+
+| Command | Effect |
+|---------|--------|
+| `BindServerControl` | Creates/retrieves `clsFormUI` or `clsGridUI` |
+| `BindComplete` | Loads grids, shows form |
+| `ButtonClick` | Dispatches to `ExecuteCommand` |
+| `DefaultChange` | Calls `SetValue` on the bound view |
+| `LookupButtonClick` | Opens a lookup child form |
+| `WhyDisabled` | Returns Interface Manager reason messages |
+| `FormClosing` | Calls `bConfirmUnload()` |
+
+## 5. Concrete Server Form Classes
+
+| Form name | Task model base | Use case |
+|-----------|----------------|---------|
+| `DatasheetForm` | `BaseDataSheetTaskModel` | Editable multi-row grid |
+| `DatalistForm` | `BaseDataListTaskModel` | Read-only list |
+| `SingleRowMaintForm` | `BaseSingleRowTaskModel` | Single-record editor |
+| `WizardForm` | `BaseWizardTaskModel` | Multi-step wizard |
+| `LookupForm` | `BaseDataSheetTaskModel` | FK picker |
+
+## 6. Custom Form Template
+
+### Step 1 — Write the HTML
+
+```html
+<!DOCTYPE html>
+<html>
+<head>{DafStylesheets}{DafScripts}</head>
+<body>
+  <div class="daf-form" data-form-id="{DafFormId}" data-session-id="{DafSessionId}">
+    <h2 data-control="FORM"></h2>
+    <button data-binding='{"type":"field","bind":"^p$Save"}'></button>
+    <div data-binding='{"type":"grid","bind":"bus:MAIN$;Columns:auto"}'></div>
+  </div>
+</body>
+</html>
+```
+
+### Step 2 — Store in `DafForm_GMS`
+
+```csharp
+AddUpdateFormSourceCode("MyCustomForm", formHtmlString);
+// or:
+InstallEmbeddedForm("MyCustomForm", typeof(MyModule));
+```
+
+### Step 3 — Register the task
+
+```csharp
+taskTable.Save(taskTable.NewRow(
+    new[] { "TaskDefID", "TaskName", "MainFormName", "TaskType", "StartupParam" },
+    new object[] { "MY_TASK_001", "My Task", "MyCustomForm", 1, "TABLE:MyTable" }
+));
+```
+
+## 7. Form Lifecycle
+
+```
+1. Task opened → ObjectFactory resolves formName → BaseServerForm
+2. serverForm.Initialize(formUIHandler, args, session)
+3. serverForm.Run(session)
+   ├── CreateOrGetTaskModel() — task model initialized
+   ├── BuildForm() — title set, custom setup
+   └── PreBindForm() — signals client to bind
+4. Client loads HTML from /DafForm/{formName}
+5. Client sends BindServerControl for each control
+6. Client sends BindComplete
+   └── gridManager.LoadAllGrids()
+   └── ShowForm() + TaskModel.FormDisplayed()
+7. Form is live — user interactions → ProcessMessage
+8. FormClosing → bConfirmUnload() → CloseForm → disposed
+```
+</script>
+
+<script type="text/markdown" data-target="render-binding">
+# Binding Developer Guide
+
+## 1. What Is Binding?
+
+Binding is the two-way communication protocol between an HTML control in the browser and a server-side business object. It eliminates hand-written AJAX — developers declare *what* a control represents, and the framework handles pushing values and routing input.
+
+## 2. Binding Types
+
+| Type | Value | Binds to |
+|------|-------|---------|
+| Field | `"field"` | A single column value or command button |
+| Grid | `"grid"` | An entire `clsTableView` rendered as a grid |
+| Grid-Field | `"grid-field"` | A command inside a grid row |
+| Grid-Group | `"grid-group"` | View-switcher (tab strip of grid views) |
+| Lookup | `"lookup"` | A FK picker button + text display |
+| Filter | `"filter"` | A `SelectionGrid` filter panel |
+| Tab | `"tab"` | A tab strip control |
+| Fieldset | `"fieldset"` | Container with auto-generated field controls |
+| Tree | `"tree"` | Hierarchical tree control |
+| Label | `"label"` | Static localized text |
+
+## 3. Field Binding
+
+Format: `[^]<busObjectName>$<columnOrCommandName>`
+
+```json
+{ "type": "field", "bind": "MAIN$ProductName" }
+{ "type": "field", "bind": "MAIN$IsActive" }
+{ "type": "field", "bind": "^p$Save" }
+{ "type": "field", "bind": "^MAIN$Approve" }
+{ "type": "field", "bind": "MAIN$CategoryId.CategoryName" }
+```
+
+Special suffixes:
+- `-ID` — binds to the internal ID of FK target
+- `-Format` — binds to the formatted display value
+
+## 4. Grid Binding
+
+```json
+{ "type": "grid", "bind": "bus:MAIN$;Columns:auto" }
+{ "type": "grid", "bind": "bus:Lines$;Columns:LineNo,ProductName,Qty" }
+{ "type": "grid", "bind": "bus:MAIN$;gridid:DataSheet_Main_Product" }
+{ "type": "grid", "bind": "bus:Lines$;Columns:auto;AutoRefresh:true" }
+```
+
+## 5. Lookup Binding
+
+```json
+{
+  "type": "lookup",
+  "bind": "{\"ColumnName\":\"CustomerId\",\"TextControlName\":\"txtCustomerName\",\"LookupID\":\"Customer\",\"LookupReturnColumnName\":\"CustomerName\"}"
+}
+```
+
+Lookup flow:
+```
+User clicks button
+  → LookupButtonClick → opens child DatasheetForm
+  → User selects row
+  → LookupClick → sets ColumnName = selectedKey
+  → TextControlName refreshed with LookupReturnColumnName value
+```
+
+Restrict lookup rows:
+
+```csharp
+public override void PopulateLookupStartupInfo(string columnPath, RowModel row, clsLookupStartupInfo info)
+{
+    base.PopulateLookupStartupInfo(columnPath, row, info);
+    if (columnPath == "ProductId")
+        info.SelectRestrict.AddCriteria("IsActive", SelectionOperatorEnum.IsEqualTo, true);
+}
+```
+
+## 6. Filter Binding
+
+```json
+{ "type": "filter", "bind": "bus:FILTER_MAIN$" }
+```
+
+```csharp
+// Register in CreateDataContext:
+selectObjects["FILTER_MAIN"] = new SelectionGrid(Session, MainView.Table);
+```
+
+## 7. Server → Client Commands (Key)
+
+| Method | Effect in browser |
+|--------|-------------------|
+| `SetControlValue(ctrl, value)` | Sets the control's displayed value |
+| `SetControlParam(ctrl, param, value)` | Sets a named property on the control |
+| `InvalidateValidList(ctrl)` | Re-requests dropdown items |
+| `ShowForm(modal)` | Makes the form visible |
+| `CloseForm()` | Closes the form |
+| `GridAddColumn(grid, col, type)` | Adds a column definition to the grid |
+| `GridLoadData(grid, data)` | Pushes full row data to the grid |
+
+## 8. Client → Server Commands (Key)
+
+| Command | Triggered by |
+|---------|-------------|
+| `BindServerControl` | Control hydration |
+| `BindComplete` | All controls bound |
+| `ButtonClick` | User clicks a command button |
+| `DefaultChange` | User changes a field value |
+| `WhyDisabled` | User hovers a disabled control |
+| `GridEvent` | Any grid interaction |
+| `FormClosing` | Window close attempted |
+
+## 9. `WhyDisabled` — Explaining Disabled Controls
+
+When a user hovers a disabled control, the server calls `table.GetUIAppliedReasons(...)` and returns Interface Manager reason messages (e.g., `"Order is confirmed."`).
+
+## 10. Binding Lifecycle
+
+```
+1. HTML delivered → JS parses binding declarations
+2. For each control: client sends BindServerControl
+   → Server creates clsFormUI / clsGridUI
+   → Subscribes to busObject events
+   → Pushes initial UICommands to client
+3. Client sends BindComplete
+   → gridManager.LoadAllGrids()
+   → ShowForm()
+4. User interacts
+   → DefaultChange → SetValue → events → dependent controls update
+   → ButtonClick → ExecuteCommand → UICommands refresh affected controls
+5. FormClosing → bConfirmUnload() → CloseForm
+```
+</script>
+
+<script type="text/markdown" data-target="render-frontend">
+# Front-End Developer Guide
+
+## 1. Architecture Overview
+
+The DAF front end is a JavaScript SPA embedded inside the web console shell.
+
+```
+Browser
+└── DafForm.html (shell)
+      ├── daf-site.js (main bundle)
+      ├── daf-site.min.css
+      └── Bootstrap / jQuery / jQuery UI
+            │
+            ▼
+      FormProxy (client.js) ←── HTTP ──► BaseServerForm (C#)
+            │
+            ▼
+      Control Handlers (daf-*-handler.js)
+```
+
+Static files are served from `GsoftApp.Framework.Web.Core/wwwroot/`.
+
+## 2. Shell Page Tokens
+
+| Token | Replaced with |
+|-------|--------------|
+| `{DafApplicationName}` | Application name from config |
+| `{baseUrl}` | Application base URL |
+| `{DafSessionId}` | Current session ID |
+| `{DafFormId}` | Unique form instance GUID |
+| `{DafMainFormId}` | Launcher form ID |
+| `{DafStylesheets}` | Extension point for per-form CSS |
+| `{DafScripts}` | Extension point for per-form JS |
+
+## 3. wwwroot Static File Layout
+
+```
+wwwroot/
+├── css/
+│   ├── bootstrap.css
+│   ├── daf-site.min.css   (all DAF styles)
+│   └── jquery.datetimepicker.css
+├── js/
+│   ├── jquery.js
+│   ├── bootstrap.js
+│   ├── jquery-ui.js
+│   ├── daf-site.js        (main bundle: client.js + all handlers)
+│   └── jquery.datetimepicker.full.js
+└── images/
+```
+
+## 4. CSS Custom Properties for Theming
+
+Override these in a custom CSS file:
+
+```css
+:root {
+  --daf-primary-color: #3b82f6;
+  --daf-sidebar-bg: #1e293b;
+  --daf-header-bg: #ffffff;
+  --daf-grid-header-bg: #f1f5f9;
+  --daf-button-radius: 6px;
+  --daf-font-family: 'Segoe UI', system-ui, sans-serif;
+}
+```
+
+## 5. Control Handlers
+
+Every UI control type has a **handler** class. Built-in handlers:
+
+| Handler | Renders |
+|---------|---------|
+| `DafTextboxHandler` | Text input |
+| `DafCheckboxHandler` | YesNo checkbox |
+| `DafDropdownHandler` | Static list dropdown |
+| `DafDatetimeHandler` | Date/time picker |
+| `DafLookupHandler` | FK lookup button + text |
+| `DafGridHandler` | Editable data grid |
+| `DafReadOnlyGridHandler` | Read-only grid |
+| `DafPictureboxHandler` | Image display |
+| `DafFileUploadHandler` | File upload control |
+| `DafTreeHandler` | Hierarchical tree |
+| `DafTabHandler` | Tab strip |
+
+### Writing a Custom Handler
+
+```javascript
+class MyRatingHandler {
+    constructor(controlName, bindingInfo) {
+        this.controlName = controlName;
+        this.bindingInfo = bindingInfo;
+        this.element = null;
+    }
+
+    initialize(container) {
+        this.element = $('<div class="my-rating"></div>');
+        for (let i = 1; i <= 5; i++) {
+            const star = $('<span>★</span>')
+                .on('click', () => this.setValue(i));
+            this.element.append(star);
+        }
+        container.append(this.element);
+    }
+
+    setValue(value) {
+        // Update star display
+        this.element.find('span').each((i, el) => {
+            $(el).toggleClass('active', i < value);
+        });
+        // Notify the server
+        DafFormProxy.sendDefaultChange(this.controlName, value);
+    }
+
+    receiveValue(value) {
+        this.setValue(parseInt(value) || 0);
+    }
+}
+
+// Register:
+DafControlHandlers.register('MyRating', MyRatingHandler);
+```
+
+## 6. UI Handler Registration
+
+Register a custom handler in `DafControlHandler_GMS`:
+
+| Column | Value |
+|--------|-------|
+| `UIHandlerName` | `"MyRating"` |
+| `DefaultControlType` | `"DafTextbox"` (fallback) |
+
+Set on a column via metadata:
+
+```csharp
+oColumn.UIHandlerName     = "MyRating";
+oColumn.DefaultControlType = (int)ControlTypeEnum.CustomControl;
+```
+
+## 7. Static Resources
+
+Static resources (icons, images) are stored in `DafStaticResource_GMS` and served via `/form/sr/{name}`:
+
+```csharp
+// Install in a module:
+AddStaticResourceFromResources("my-icon.png", typeof(MyModule));
+```
+
+Access in HTML:
+```html
+<img src="/form/sr/my-icon.png" />
+```
+
+## 8. Frontend Checklist
+
+- [ ] Custom CSS variables override `--daf-*` properties in a skin stylesheet
+- [ ] Custom handlers are registered via `DafControlHandler_GMS`
+- [ ] Icons are installed via `AddStaticResourceFromResources` in a module installer
+- [ ] Custom JS is injected per-form via the `{DafScripts}` token or `DafStaticResource_GMS`
+- [ ] Test all custom handlers against the `WhyDisabled` flow and read-only states
+</script>
+
+<script type="text/markdown" data-target="render-grid-definitions">
+# Grid Definitions Guide
+
+## 1. Overview
+
+Grid definitions control which columns appear in grids, their order, width, caption, and sort. They are stored in the database and customizable by administrators per view.
+
+## 2. Database Tables
+
+| Table | Purpose |
+|-------|---------|
+| `DafGrid_GMS` | One row per grid instance; controls rendering style |
+| `DafGridColumn_GMS` | Columns within a grid |
+| `DafGridView_GMS` | Named views (saved column arrangements) per grid group |
+| `DafGridUserOvrd_GMS` | Per-user column overrides |
+
+## 3. Grid Definition (`DafGrid_GMS`)
+
+| Column | Purpose |
+|--------|---------|
+| `GridDefID` | PK — used as the binding handle |
+| `MainTableName` | Logical table name the grid is bound to |
+| `PagingEnabled` | Whether the grid pages its rows |
+| `PageSize` | Rows per page |
+| `GridHandler` | Rendering style (see below) |
+
+### Grid Handler Values
+
+| Value | Appearance |
+|-------|-----------|
+| `GridTable` | Standard editable table |
+| `DafReadOnlyGrid` | Read-only table |
+| `GridChart` | Chart/graph |
+| `GridSmallIcon` | Small icon grid |
+| `GridLargeIcon` | Large icon grid |
+
+## 4. Grid Column Definition (`DafGridColumn_GMS`)
+
+| Column | Purpose |
+|--------|---------|
+| `FieldName` | Column name from the bound `TableModel` |
+| `Caption` | Display label (overrides metadata caption) |
+| `SeqNo` | Display order |
+| `Show` | Whether the column is visible |
+| `Width` | Pixel width |
+| `ReadOnly` | Lock this column |
+| `TotalFunction` | Aggregation: `SUM`, `AVG`, `COUNT`, `MIN`, `MAX` |
+| `SortDirection` | Default sort: `ASC` or `DESC` |
+
+## 5. Grid Views (`DafGridView_GMS`)
+
+A **grid view** is a named, saved arrangement of a grid. Multiple views can exist for the same `GridGroupID`.
+
+| Column | Purpose |
+|--------|---------|
+| `GridDefID` | FK → the `DafGrid_GMS` row for this view's columns |
+| `GridGroupID` | Groups related views together |
+| `ViewName` | User-facing name (e.g., "Default", "Compact") |
+| `SeqNo` | Order in the view selector tab strip |
+
+## 6. Grid ID Naming Convention
+
+```
+{TaskApiName}_{busObjectName}_{TableName}
+// e.g. "DataSheet_Main_Product"
+
+{TaskApiName}_{busObjectName}_{TableName}_Details
+// e.g. "DataSheet_Main_Product_Details"
+```
+
+## 7. Working with Grid Definitions in Code
+
+```csharp
+// Auto-generate from table metadata
+var provider = new DefaultGridDefProvider(Session);
+var gridDef = provider.AutoGenerateGridDef("Product", "DataSheet_Main_Product");
+
+// Override columns via event
+gridManager.OverrideGridColumns += (gridID, columns) =>
+{
+    if (gridID == "DataSheet_Main_Order")
+    {
+        var keyCol = columns.FirstOrDefault(c =>
+            c.Get(tblGridColumnDef.FieldName)?.ToString() == "OrderKey");
+        if (keyCol != null)
+            keyCol.Set(tblGridColumnDef.Show, false);
+    }
+};
+
+// Add a named view
+provider.AddGridView("DataSheet_Main_Product", "Compact", seqNo: 2);
+
+// Read column definitions
+var columns = provider.GridColumns("DataSheet_Main_Product");
+foreach (var col in columns)
+{
+    string name    = col.Get(tblGridColumnDef.FieldName)?.ToString();
+    bool   visible = Convert.ToBoolean(col.Get(tblGridColumnDef.Show) ?? true);
+}
+```
+
+## 8. Grid Definitions Checklist
+
+- [ ] For every datasheet task, ensure a `DafGridView_GMS` row exists with `GridGroupID = TaskApiName_MAIN_TableName`
+- [ ] Use `AutoGenerateGridDef` in a module installer to seed initial column definitions
+- [ ] Name views consistently: "Default" for the standard view; add specialty views as needed
+- [ ] Assign view access to roles via `DafRoleAccess_GMS` using `"GridView_{GridGroupID}"` as the object key
+- [ ] Test grid rendering with `DafReadOnlyGrid` for `BaseDataListTaskModel` tasks
+</script>
+
+<script type="text/markdown" data-target="render-widgets">
+# Widgets Guide
+
+## 1. Overview
+
+**Widgets** are mini-applications that appear on the user's dashboard (Launcher/home screen). Each widget is a self-contained form rendered inside the dashboard grid.
+
+## 2. Database Tables
+
+| Table | Purpose |
+|-------|---------|
+| `DafWidget_GMS` | Widget definitions |
+| `DafDashboardDef_GMS` | Dashboard layout configurations |
+| `DafDashboardWidget_GMS` | Widget placements within a dashboard |
+| `DafUserDashboard_GMS` | User's personal dashboards |
+
+## 3. Widget Definition (`DafWidget_GMS`)
+
+| Column | Purpose |
+|--------|---------|
+| `WidgetKey` | PK |
+| `WidgetName` | Display name |
+| `TaskDefID` | Task to render inside the widget |
+| `FormName` | Form template to use |
+| `Width` | Default width (grid units) |
+| `Height` | Default height (pixels) |
+| `NoTitle` | Hide the widget title bar |
+| `StartupParams` | Widget-level startup parameter overrides |
+
+## 4. Built-in Widgets
+
+| Widget | Purpose |
+|--------|---------|
+| `ActiveTasks` | Lists all tasks currently open in the session |
+| `RecentlyAccessed` | Shows recently accessed records |
+
+## 5. Registering a Widget in a Module
+
+```csharp
+dal.InsertRow("DafWidget_GMS", new List<clsColumnAndValue>
+{
+    new clsColumnAndValue(widgetCols[0], "MY_WIDGET"),     // WidgetKey
+    new clsColumnAndValue(widgetCols[1], "Inventory KPI"), // WidgetName
+    new clsColumnAndValue(widgetCols[2], "INV_KPI_TASK"),  // TaskDefID
+    new clsColumnAndValue(widgetCols[3], "SingleRowMaintForm"), // FormName
+    new clsColumnAndValue(widgetCols[4], 4),               // Width
+    new clsColumnAndValue(widgetCols[5], 200),             // Height
+});
+```
+
+## 6. Dashboard Management
+
+Users can manage their dashboards:
+
+| Command | Action |
+|---------|--------|
+| `NewDashboard` | Create a new named dashboard |
+| `RenameDashboard` | Rename the current dashboard |
+| `DeleteDashboard` | Remove the current dashboard |
+| `AddWidget` | Open widget picker; add selected widget |
+
+## 7. Default Dashboard
+
+A default dashboard is created for new users on first login. The default layout is defined in `DafDashboardDef_GMS` and seeded by `CoreModule`.
+
+## 8. StartupParams for Widgets
+
+A widget can override its task's startup parameters:
+
+```
+TABLE:InventoryItem;IsReadOnly:true;FILTERBY:IsActive
+```
+
+This lets the same task appear as a widget with different context (e.g., read-only, pre-filtered).
+
+## 9. Widget Checklist
+
+- [ ] Insert a row into `DafWidget_GMS` with `WidgetKey`, `WidgetName`, `TaskDefID`, `FormName`, `Width`, `Height`
+- [ ] Register the backing task in `DafTask_GMS`
+- [ ] Add the widget to the default dashboard via `DafDashboardWidget_GMS` if it should appear on first login
+- [ ] Set `StartupParams` if the widget needs a different context than the standalone task
+</script>
+
+<script type="text/markdown" data-target="render-api">
+# API Developer Guide
+
+## 1. Overview
+
+DAF exposes a REST API with CRUD access to any domain table. Each table maps to `/api/{tableName}` endpoints. The same `IDataService` contract is used server-side and remotely via `DataServiceClient`.
+
+## 2. Enabling API Access
+
+1. Set `AllowApi = true` in `DafTable_GMS` or via `MetaDataPopulateTableInfo`
+2. Create a grid view named `API_{TableName}` and assign it to the allowed roles
+
+## 3. Authentication
+
+| Method | How |
+|--------|-----|
+| Cookie-based | Browser session — no extra headers |
+| Header-based | `X-UserName: admin` + `X-Password: secret` |
+
+## 4. HTTP Endpoints
+
+### Create
+```
+POST /api/{tableName}
+{ "Row": { "ProductName": "Widget A", "Price": 9.99 } }
+→ 201 Created: { "Success": true, "Key": "PROD001", "Data": null, "Errors": [] }
+```
+
+### Read Single
+```
+GET /api/{tableName}/{key}[?columns=col1,col2]
+→ 200 OK: { "Success": true, "Key": "PROD001", "Data": {...}, "Errors": [] }
+```
+
+### Read List (Simple)
+```
+GET /api/{tableName}?take=20&skip=0&orderBy=ProductName+ASC&filter=IsActive=true
+```
+
+### Read List (Complex)
+```
+POST /api/{tableName}/list
+{
+  "Take": 20, "Skip": 0, "ColumnNames": "ProductId,ProductName,Price",
+  "OrderBy": "Price DESC",
+  "Filter": {
+    "AndOr": 0,
+    "Filters": [
+      { "AndOr": 0, "SelCol": { "ColumnName": "IsActive", "Oper": 0, "Value1": true } },
+      { "AndOr": 0, "SelCol": { "ColumnName": "Price", "Oper": 6, "Value1": 5.00, "Value2": 100.00 } }
+    ]
+  }
+}
+```
+
+### Update
+```
+PUT /api/{tableName}/{key}
+{ "Row": { "ProductName": "Widget A v2", "Price": 12.99 } }
+```
+
+### Delete
+```
+DELETE /api/{tableName}/{key}
+```
+
+## 5. Filter Reference (`CriteriaModel`)
+
+### `Oper` values
+
+| Value | Operator |
+|-------|----------|
+| `0` | `=` (IsEqualTo) |
+| `1` | `<>` (IsNotEqualTo) |
+| `2` | `<` (IsLessThan) |
+| `4` | `>` (IsGreaterThan) |
+| `6` | `BETWEEN` (requires Value1 and Value2) |
+| `7` | `LIKE %val%` (Contains) |
+| `9` | `IS NULL` (IsBlank) |
+| `10` | `IS NOT NULL` (IsNotBlank) |
+| `11` | `IN` (Value1 is array) |
+| `13` | Starts With |
+| `14` | Ends With |
+
+## 6. Response Structure
+
+```json
+{
+  "Success": true | false,
+  "Key": "primary-key-value",
+  "Data": { } | [ ] | number | null,
+  "Errors": [ "error message" ]
+}
+```
+
+## 7. `DataServiceClient` — .NET HTTP Client
+
+```csharp
+var client = new DataServiceClient();
+client.Connect("URL=https://my-daf.com;UserName=svc;Password=pass");
+
+// Read list
+var result = client.ReadList(new ReadListModel
+{
+    Take = 10, ColumnNames = "ProductId,ProductName,Price",
+    Filter = new CriteriaModel
+    {
+        AndOr = 0,
+        SelCol = new SelColModel { ColumnName = "IsActive", Oper = 0, Value1 = true }
+    }
+});
+
+// Create
+var created = client.Create(new CreateModel
+{
+    Row = new Dictionary<string, object>
+    { { "ProductName", "New Widget" }, { "Price", 19.99 }, { "IsActive", true } }
+});
+Console.WriteLine(created.Key); // new primary key
+```
+
+## 8. Task API
+
+Drive complete task operations over HTTP:
+
+```
+POST /task/{taskId}/list   → apply actions, return main grid rows
+POST /task/{taskId}/do     → apply actions, return success/errors only
+```
+
+### PlayActions Format
+
+```json
+{
+  "Actions": [
+    { "action": "setvalue",  "actionCommand": { "viewName": "MAIN", "fieldName": "Status", "value": "Approved" } },
+    { "action": "setvalues", "actionCommand": { "viewName": "MAIN", "valuesDict": { "CustomerId": "CUST001" } } },
+    { "action": "executecommand", "actionCommand": { "viewName": "p", "commandName": "Save",
+        "actionAnswers": { "Save changes?": { "DialogResult": "Yes" } } } }
+  ]
+}
+```
+
+### TaskClient Fluent API
+
+```csharp
+var result = await new TaskClient("URL=https://my-daf.com;UserName=svc;Password=pass")
+    .UsingTask("PROD_TASK_001")
+    .UsingView("FILTER_MAIN")
+    .SetValues(new[] { "ColumnName", "Condition", "Value1" }, new object[] { "CategoryId", "0", "CAT001" })
+    .UsingView("p")
+    .ExecuteCommand("Refresh")
+    .Play();
+```
+
+## 9. REST vs Task API
+
+| Aspect | REST API | Task API |
+|--------|----------|---------|
+| Entry point | Table name | Task definition ID |
+| Business logic | Table CRUD only | Full task: validation, commands, events |
+| Returns | Raw row data | Grid-filtered rows |
+| Access control | `API_{TableName}` grid view | `RunTask` permission on the task |
+
+## 10. API Checklist
+
+- [ ] Set `AllowApi = true` on the table
+- [ ] Create `API_{TableName}` grid view; assign to allowed roles
+- [ ] Use `GET /api/{table}` for simple queries; `POST /api/{table}/list` for complex filters
+- [ ] Use `DataServiceClient` in .NET code to call a remote DAF API
+- [ ] To customize CRUD: implement `IDataService` and register as `{TableName}DataService`
+- [ ] Use Task API for operations involving business commands and validation
+</script>
+
+<script type="text/markdown" data-target="render-filtering">
+# Filtering, Sorting, and Paging Guide
+
+## 1. Overview
+
+DAF uses a unified query model: `clsSelection`, `clsCriteria`, and `clsSort`. The same model is used everywhere — `TableModel.GetRows`, `clsTableView.Filter`, REST API, and the interactive filter panel.
+
+```
+clsSelection
+├── clsCriteria      ← AND/OR filter conditions
+├── clsSort          ← sort columns
+├── RowCount (Take)  ← page size
+└── Skip             ← page offset
+```
+
+## 2. `clsSelection` — Getting Started
+
+```csharp
+// Always get from the table (shares the column registry)
+clsSelection sel = tbl.GetEmptySelection();
+// or
+view.Filter = tbl.GetEmptySelection();
+```
+
+## 3. `SelectionOperatorEnum` — All Operators
+
+| Operator | SQL | Notes |
+|----------|-----|-------|
+| `IsEqualTo` | `= value` | |
+| `IsNotEqualTo` | `<> value` | |
+| `IsGreaterThan` | `> value` | |
+| `IsGreaterOrEqualTo` | `>= value` | |
+| `IsLessThan` | `< value` | |
+| `IsLessThanOrEqualTo` | `<= value` | |
+| `IsBlank` | `IS NULL` | |
+| `IsNotBlank` | `IS NOT NULL` | |
+| `IsBetween` | `BETWEEN v1 AND v2` | Both values required |
+| `IsIn` | `IN (v1,v2,…)` | Value1 is an array |
+| `IsNotIn` | `NOT IN (v1,v2,…)` | |
+| `Begins` | `LIKE 'value%'` | |
+| `Ends` | `LIKE '%value'` | |
+| `Contains` | `LIKE '%value%'` | |
+| `NotContains` | `NOT LIKE '%value%'` | |
+
+## 4. Adding Criteria
+
+```csharp
+// AND criteria
+sel.AddCriteria("Status", SelectionOperatorEnum.IsEqualTo, "Active");
+sel.AddCriteria("Price",  SelectionOperatorEnum.IsGreaterThan, 100m);
+sel.AddCriteria("Tags",   SelectionOperatorEnum.Contains, "urgent");
+
+// OR criteria
+sel.AddCriteria("Status", SelectionOperatorEnum.IsEqualTo, "Active",   LogicalOperatorEnum.Or_Op);
+sel.AddCriteria("Status", SelectionOperatorEnum.IsEqualTo, "Pending",  LogicalOperatorEnum.Or_Op);
+
+// Between
+sel.AddCriteria("OrderDate", SelectionOperatorEnum.IsBetween,
+    new object[] { new DateTime(2025, 1, 1), new DateTime(2025, 12, 31) });
+
+// IN list
+sel.AddCriteria("CategoryId", SelectionOperatorEnum.IsIn,
+    new object[] { "CAT001", "CAT002", "CAT003" });
+```
+
+## 5. Running Queries
+
+```csharp
+// Get rows
+var rows = tbl.GetRows(sel);
+
+// Apply to a view (re-queries from DB)
+view.Filter = sel;
+view.Refresh();
+
+// Set a permanent restriction (called during Init)
+protected override void SetDefaultFilter()
+{
+    base.SetDefaultFilter();
+    m_SelectRestrict = new clsSelection(
+        new clsCriteria("IsActive", CriteriaOperator.Equal, true));
+}
+```
+
+## 6. Sorting
+
+```csharp
+// Single column
+sel.Sort.AddSort("ProductName", SortDirectionEnum.Ascending);
+
+// Multiple columns
+sel.Sort.AddSort("CategoryId",  SortDirectionEnum.Ascending);
+sel.Sort.AddSort("ProductName", SortDirectionEnum.Ascending);
+
+// On a view
+view.Sort = new clsSort();
+view.Sort.AddSort("OrderDate", SortDirectionEnum.Descending);
+view.Refresh();
+
+// Read current sort state
+SortDirectionEnum dir = view.Sort.GetSortDirection("ProductName");
+```
+
+## 7. Paging
+
+```csharp
+// Offset-based
+sel.RowCount = 20;   // take 20 rows
+sel.Skip     = 40;   // skip first 40 (page 3)
+
+// Using clsPager
+var pager = new clsPager(view, pageSize: 25);
+pager.GoToPage(2);          // navigate to page 2
+int totalRows = pager.TotalRows;
+int pageCount = pager.PageCount;
+```
+
+## 8. Global Filters (`DafGlobalFilter_GMS`)
+
+Global filters are applied to all queries for a given table, regardless of user-supplied criteria. They are useful for multi-tenant row isolation or date-range restrictions.
+
+Register a global filter provider via `IFilterProvider`:
+
+```csharp
+public class TenantFilterProvider : IFilterProvider
+{
+    public clsSelection GetFilter(clsSession session, string tableName)
+    {
+        var sel = new clsSelection(tableName);
+        sel.AddCriteria("TenantId", SelectionOperatorEnum.IsEqualTo, session.TenantId);
+        return sel;
+    }
+}
+```
+
+## 9. End-to-End Example
+
+```csharp
+// Build a filtered, sorted, paged query
+var products = DbTables.Table(Session, "Product");
+var sel = products.GetEmptySelection();
+
+// Filter
+sel.AddCriteria("IsActive",    SelectionOperatorEnum.IsEqualTo, true);
+sel.AddCriteria("CategoryId",  SelectionOperatorEnum.IsEqualTo, "CAT001");
+sel.AddCriteria("Price",       SelectionOperatorEnum.IsBetween, new object[] { 10m, 100m });
+
+// Sort
+sel.Sort.AddSort("ProductName", SortDirectionEnum.Ascending);
+
+// Page
+sel.RowCount = 20;
+sel.Skip     = 0;
+
+var rows = products.GetRows(sel);
+```
+</script>
+
+<script type="text/markdown" data-target="render-change-tracking">
+# Change Tracking & Audit Guide
+
+## 1. Two Complementary Mechanisms
+
+| Mechanism | Table | What it captures |
+|-----------|-------|-----------------|
+| **Change Tracking** | `DafChangeHistory_GMS` | Summary of every insert/update/delete |
+| **Audit Trail** | `DafAuditChange_GMS` | Full before/after column values per save |
+
+## 2. Enabling Change Tracking
+
+In `DafTable_GMS` (admin UI or code):
+
+```csharp
+protected override void MetaDataPopulateTableInfo(ref clsTableInfo oTableInfo)
+{
+    base.MetaDataPopulateTableInfo(ref oTableInfo);
+    oTableInfo.TrackChanges = true;   // log to DafChangeHistory_GMS
+    oTableInfo.AuditChanges = true;   // merge audit child table
+}
+```
+
+## 3. `DafChangeHistory_GMS` — Schema
+
+| Column | Purpose |
+|--------|---------|
+| `ChangeKey` | PK |
+| `TableName` | The changed table |
+| `UniqueKey` | Primary key of the changed row |
+| `NaturalKey` | Human-readable identifier |
+| `ChangeAction` | `Insert`, `Update`, `Delete` |
+| `ChangeDate` | UTC timestamp |
+| `ChangeUser` | User who made the change |
+
+Column-level diffs are stored in `DafChangeHistoryDetail_GMS` (child of `DafChangeHistory_GMS`):
+
+| Column | Purpose |
+|--------|---------|
+| `ColumnName` | The changed column |
+| `ColumnCaption` | Display label |
+| `OldValue` | Value before the change |
+| `NewValue` | Value after the change |
+
+## 4. Audit Trail (`DafAuditChange_GMS`)
+
+When `AuditChanges = true`, a child table is merged onto the parent view showing:
+
+| Column | Purpose |
+|--------|---------|
+| `CreateDate` | When the row was first inserted |
+| `CreateUserKey` | Who created it |
+| `UpdateDate` | When last modified |
+| `UpdateUserKey` | Who last modified it |
+
+These columns are read-only and always current.
+
+## 5. Domain Name Stamps (Lightweight)
+
+For tables that only need timestamps without full audit, use domain columns:
+
+```csharp
+oColumn.Domain = DomainNames.CreateDate;   // auto-set on INSERT, read-only
+oColumn.Domain = DomainNames.UpdateDate;   // auto-set on every SAVE
+oColumn.Domain = DomainNames.CreateUser;   // auto-set to current user on INSERT
+oColumn.Domain = DomainNames.UpdateUser;   // auto-set to current user on every SAVE
+```
+
+## 6. Viewing Change History
+
+Use the built-in `ChangeHistoryForm` task. From a DatasheetForm, right-click a row → **Change History** to view full audit for that record.
+
+## 7. Real-Time Change Notifications
+
+Enable `PublishChanges = true` to broadcast changes via `IMessageBroker` (Kafka):
+
+```csharp
+oTableInfo.PublishChanges  = true;  // publish change events
+oTableInfo.SubscribeChanges = true; // receive change events (refresh other sessions)
+```
+
+The `ChangeHistoryMessage` structure includes `TableName`, `UniqueKey`, `ChangeAction`, `ChangeDate`, and the user who made the change.
+
+## 8. Querying Change History in Code
+
+```csharp
+var history = DbTables.Table(Session, "DafChangeHistory_GMS");
+var sel = history.GetEmptySelection();
+sel.AddCriteria("TableName", SelectionOperatorEnum.IsEqualTo, "Order");
+sel.AddCriteria("UniqueKey", SelectionOperatorEnum.IsEqualTo, orderId);
+sel.Sort.AddSort("ChangeDate", SortDirectionEnum.Descending);
+var changes = history.GetRows(sel);
+```
+
+## 9. Checklist
+
+- [ ] Enable `TrackChanges = true` on tables that need a history log
+- [ ] Enable `AuditChanges = true` on tables that need full before/after diffs
+- [ ] Use `DomainNames.CreateDate/UpdateDate/CreateUser/UpdateUser` for lightweight stamps
+- [ ] Enable `PublishChanges = true` if real-time refresh across sessions is needed
+- [ ] Test the `ChangeHistoryForm` from the admin Tasks menu to verify changes are recorded
+</script>
+
+<script type="text/markdown" data-target="render-files">
+# Files, Attachments, and Storage Guide
+
+## 1. Overview
+
+```
+DafFileInfo     ← universal in-memory file descriptor
+IFileProvider   ← pluggable storage backend
+File Container  ← named, configured IFileProvider instance (DafFileContainer_GMS)
+```
+
+Binary files are never stored directly in domain columns. A `Domain = Picture` column holds a `DafFileInfo` (JSON); the actual bytes live in a file container.
+
+## 2. `DafFileInfo` — The File Descriptor
+
+```csharp
+public class DafFileInfo
+{
+    public string Name       { get; set; } // original filename
+    public byte[] FileContent{ get; set; } // bytes (null when referencing stored file)
+    public int    Size       { get; set; } // bytes
+    public bool   NotFinal   { get; set; } // true = upload in progress
+    public string LocationId { get; set; } // storage key for retrieval
+    public string FileType   { get; set; } // MIME type
+    public Guid?  UploadId   { get; set; } // session ID for multi-chunk uploads
+}
+```
+
+## 3. `IFileProvider` — Storage Interface
+
+```csharp
+public interface IFileProvider
+{
+    void Connect(string connectionString);
+    Task UploadloadBytes(string location, byte[] content);
+    Task UploadloadStream(string location, Stream content);
+    Task<byte[]> DownloadBytes(string location);
+    Task<Stream> DownloadStream(string location);
+    Task Delete(string location);
+}
+```
+
+## 4. Built-in Storage Providers
+
+| Provider | Backend | Connection string |
+|----------|---------|-------------------|
+| `FileSystemFileProvider` | Local / network FS | Directory path: `C:\DafFiles` |
+| `AzureBlobFileProvider` | Azure Blob Storage | `{"ConnectionString":"...","ContainerName":"mycontainer"}` |
+| `S3FileProvider` | AWS S3 | S3 connection string |
+| `DatabaseFileProvider` | DB table (`DafFile_GMS`) | (none needed) |
+
+## 5. File Containers (`DafFileContainer_GMS`)
+
+A **file container** is a named, configured `IFileProvider` instance.
+
+```csharp
+// Resolve a container and upload
+var container = FileContainerTable.GetContainer(Session, "Documents");
+var provider  = container.GetFileProvider();
+await provider.Connect(container.ConnectionString);
+
+var fileInfo = new DafFileInfo { Name = "invoice.pdf", FileContent = pdfBytes };
+await provider.UploadloadBytes(fileInfo.LocationId, fileInfo.FileContent);
+```
+
+Set the default container in admin UI (**System Settings** → Default Container) or in `appsettings.json`:
+
+```
+daf:FileSystemProviderRootPath = C:\DafFiles
+```
+
+## 6. Attachment System
+
+For tables with file attachments, three tables work together:
+
+| Table | Purpose |
+|-------|---------|
+| `DafAttachmentSet_GMS` | One set per record; links domain rows to their attachments |
+| `DafAttachment_GMS` | Individual file references |
+| `DafAttachmentHistory_GMS` | Version history for each attachment |
+
+## 7. Programmatic File Operations
+
+```csharp
+// Upload a file
+var container = FileContainerTable.GetDefaultContainer(Session);
+var provider  = container.CreateFileProvider();
+var locationId = Guid.NewGuid().ToString();
+await provider.UploadloadBytes(locationId, fileBytes);
+var fileInfo = new DafFileInfo { Name = "report.pdf", LocationId = locationId, Size = fileBytes.Length };
+
+// Download
+var bytes = await provider.DownloadBytes(fileInfo.LocationId);
+
+// Delete
+await provider.Delete(fileInfo.LocationId);
+
+// Work with attachments on a domain row
+var attachSet = AttachmentSetTable.GetOrCreateSet(Session, "Order", orderId);
+AttachmentTable.AddAttachment(Session, attachSet.AttachmentSetKey, fileInfo);
+```
+
+## 8. Memory Table for AI Indexing
+
+Files added to `DafMemoryFile_GMS` are indexed into the vector store for semantic search:
+
+```csharp
+var memoryTable = DbTables.Table(Session, "DafMemoryFile_GMS");
+var row = memoryTable.NewRow();
+row.SetValue("FileKey",  Guid.NewGuid().ToString());
+row.SetValue("FileName", "Annual Report 2024");
+row.SetValue("LocationId", locationId);
+row.SetValue("Tags", "finance,annual,2024");
+memoryTable.Save(row);
+// The indexer picks this up and adds it to IVectorStore
+```
+
+## 9. Storage Checklist
+
+- [ ] Set `daf:FileSystemProviderRootPath` for local file storage
+- [ ] Create a `DafFileContainer_GMS` row for each storage destination
+- [ ] Set the default container in System Settings
+- [ ] For Azure Blob: register a `DafProviderResource_GMS` row with the JSON connection string
+- [ ] For file/image columns: set `Domain = DomainNames.Picture`; the UI automatically handles upload/download
+- [ ] For attachments: use `AttachmentSetTable` and `AttachmentTable` to manage file sets
+</script>
+
+<script type="text/markdown" data-target="render-tasks-menus">
+# Tasks and Menus Guide
+
+## 1. Overview
+
+A **task** defines a screen (form template + startup params). A **menu item** is a navigation pointer to a task. They are separate — a task can run without a menu entry, and multiple menu items can point to the same task.
+
+```
+DafMenuDef_GMS  ← menu configuration (per user/role/default)
+└── DafMenu_GMS ← menu items (tree: folders + task links)
+      └── TaskDefID → DafTask_GMS ← task definition
+                          └── MainFormName → form template
+```
+
+## 2. Task Registration
+
+```csharp
+var taskTable = DbTables.Table(session, TaskTableNames.Task);
+taskTable.Save(taskTable.NewRow(
+    new[] { "TaskDefID", "TaskName", "MainFormName", "TaskType", "StartupParam" },
+    new object[] {
+        "PROD_TASK_001",
+        "Products",
+        "DatasheetForm",
+        1,
+        "TABLE:Product"
+    }));
+```
+
+### Task Table Columns
+
+| Column | Required | Purpose |
+|--------|----------|---------|
+| `TaskDefID` | Yes | Unique identifier |
+| `TaskName` | Yes | Display name in title bar |
+| `MainFormName` | Yes | Form template name |
+| `TaskType` | Yes | Always `1` |
+| `StartupParam` | No | Startup context for the task model |
+
+## 3. Menu Items
+
+### Add a Folder and Task Item
+
+```csharp
+var menuTable = DbTables.Table(session, TaskTableNames.Menu);
+
+// Add folder
+menuTable.Save(menuTable.NewRow(
+    new[] { "MenuID", "MenuName", "MenuType", "MenuKey", "SeqNo" },
+    new object[] { "FOLDER_INV", "Inventory", 1, 1, 20 }));
+
+// Add task item inside folder
+menuTable.Save(menuTable.NewRow(
+    new[] { "MenuID", "MenuName", "MenuType", "ParentMenuID", "TaskDefID", "MenuKey", "SeqNo" },
+    new object[] { "MENU_INV_PRODUCTS", "Products", 2, "FOLDER_INV", "PROD_TASK_001", 1, 10 }));
+```
+
+### Menu Item Columns
+
+| Column | Purpose |
+|--------|---------|
+| `MenuID` | Unique ID |
+| `MenuName` | Label in the navigation tree |
+| `MenuType` | `1` = Folder, `2` = Task item |
+| `ParentMenuID` | Parent folder (blank = top-level) |
+| `TaskDefID` | Task to run (only for type 2) |
+| `MenuKey` | Which menu configuration owns this item |
+| `SeqNo` | Sort order within the parent folder |
+
+## 4. Startup Parameters
+
+| Key | Example | Effect |
+|-----|---------|--------|
+| `TABLE` | `TABLE:Product` | Sets the main table name |
+| `SINGLEINSTANCE` | `SINGLEINSTANCE:TRUE` | Only one instance at a time |
+| `ISCHILD` | `ISCHILD:TRUE` | Always opens as modal child |
+
+Custom params: `TABLE:Order;FILTERBY:CustomerId;READONLY:FALSE`
+
+```csharp
+// Read in PostInit:
+var filterColumn = ConversionUtil.ToString(TaskState.Input["FILTERBY"]);
+```
+
+## 5. Opening Tasks Programmatically
+
+```csharp
+// Main task (non-modal)
+MenuProvider.RunTask(new RunTaskCommand(MenuProvider, "PROD_TASK_001"));
+
+// Modal child task
+Session.RunChildTask(TaskTemplateNames.SingleRow, new clsObjectEx(new Dictionary<string, object>
+{
+    { "StartupContext", "TABLE:Product" },
+    { "AddOrUpdateMode", "Add" },
+    { "TaskName", "Add Product" }
+})).ContinueWith(result =>
+{
+    if (ConversionUtil.ToBoolean(result?.Result?["Saved"]))
+        MainView.Refresh();
+});
+```
+
+## 6. Form Templates
+
+| Template constant | Form name | Use case |
+|------------------|-----------|---------|
+| `TaskTemplateNames.Datasheet` | `DatasheetForm` | Editable multi-row grid |
+| `TaskTemplateNames.Datalist` | `DatalistForm` | Read-only list |
+| `TaskTemplateNames.SingleRow` | `SingleRowMaintForm` | Single-record editor |
+| `TaskTemplateNames.Wizard` | `WizardForm` | Multi-step wizard |
+| `TaskTemplateNames.Launcher` | `LauncherForm` | Home / dashboard |
+
+## 7. Security
+
+| Action | Effect when denied |
+|--------|--------------------|
+| `SecurityActions.RunTask` | Task cannot be opened |
+| `SecurityActions.SuperviseTask` | Opens without supervisor privileges |
+| `SecurityActions.ChangeTaskData` | Opens in read-only mode |
+
+## 8. Tasks & Menus Checklist
+
+- [ ] Insert a row into `DafTask_GMS` with `TaskDefID`, `TaskName`, `MainFormName`, `StartupParam`
+- [ ] Choose the correct `MainFormName` from `TaskTemplateNames`
+- [ ] If a custom `TaskModel` is needed, register it in `ClassNameProvider`
+- [ ] Insert a `DafMenu_GMS` row (`MenuType = 2`) pointing to the task
+- [ ] If a folder is needed, insert a `DafMenu_GMS` row with `MenuType = 1` first
+- [ ] Assign permissions in `DafPermission_GMS` for each relevant role
+</script>
+
+<script type="text/markdown" data-target="render-categories">
+# Categories Guide
+
+## 1. Overview
+
+DAF's category system provides a hierarchical classification tree for domain records. Categories are organized into named **sets**, and each set contains a tree of **category nodes**.
+
+## 2. Database Tables
+
+| Table | Purpose |
+|-------|---------|
+| `DafCategorySet_GMS` | Named category sets (e.g., "Product Categories", "Regions") |
+| `DafCategory_GMS` | Tree of categories within a set |
+
+### `DafCategorySet_GMS` Schema
+
+| Column | Purpose |
+|--------|---------|
+| `SetKey` | PK |
+| `SetName` | Human-readable name for the category group |
+
+### `DafCategory_GMS` Schema
+
+| Column | Purpose |
+|--------|---------|
+| `CategoryKey` | PK |
+| `SetKey` | FK → `DafCategorySet_GMS` |
+| `ParentCategoryKey` | Parent node (null = root) |
+| `CategoryName` | Display name |
+| `SeqNo` | Sort order within parent |
+
+## 3. Linking a Column to Categories
+
+Add a column with `Domain = DomainNames.Category`:
+
+```csharp
+protected override void OnOverrideColumnInfo(clsColumn oColumn)
+{
+    base.OnOverrideColumnInfo(oColumn);
+    if (oColumn.ColumnName == "CategoryId")
+        oColumn.Domain = DomainNames.Category;
+}
+```
+
+The UI automatically shows a category picker for this column.
+
+## 4. Specifying the Category Set
+
+Override `GetCategorySetName` to return the set name for a given column:
+
+```csharp
+public override string GetCategorySetName(string columnName)
+{
+    if (columnName == "CategoryId") return "Product Categories";
+    return base.GetCategorySetName(columnName);
+}
+```
+
+## 5. Category Filtering in Datasheet Forms
+
+`BaseDataSheetTaskModel` automatically adds a category filter panel when any column has `Domain = Category`. Toggle it with:
+
+```csharp
+ApplyCategoryFilter = true;  // default: enabled when Category domain column exists
+```
+
+## 6. Managing Categories in Code
+
+```csharp
+// Create a category set
+var setTable = DbTables.Table(Session, "DafCategorySet_GMS");
+var setRow = setTable.NewRow();
+setRow.SetValue("SetName", "Product Categories");
+setTable.Save(setRow);
+
+// Add categories
+var catTable = DbTables.Table(Session, "DafCategory_GMS");
+var rootRow = catTable.NewRow();
+rootRow.SetValue("SetKey", setRow.GetValue("SetKey"));
+rootRow.SetValue("CategoryName", "Electronics");
+catTable.Save(rootRow);
+
+var childRow = catTable.NewRow();
+childRow.SetValue("SetKey", setRow.GetValue("SetKey"));
+childRow.SetValue("ParentCategoryKey", rootRow.GetValue("CategoryKey"));
+childRow.SetValue("CategoryName", "Laptops");
+catTable.Save(childRow);
+
+// Read the tree
+var sel = catTable.GetEmptySelection();
+sel.AddCriteria("SetKey", SelectionOperatorEnum.IsEqualTo, setKey);
+sel.Sort.AddSort("SeqNo", SortDirectionEnum.Ascending);
+var categories = catTable.GetRows(sel);
+```
+
+## 7. Categories Checklist
+
+- [ ] Insert a row into `DafCategorySet_GMS` for each category group needed
+- [ ] Seed initial category nodes in `DafCategory_GMS`
+- [ ] Set `Domain = DomainNames.Category` on the relevant column
+- [ ] Override `GetCategorySetName` in the `TableModel` to map columns to sets
+- [ ] Use `CategoryTaskModel` admin task to let users manage categories at runtime
+</script>
+
+<script type="text/markdown" data-target="render-ai-features">
+# AI Features Guide
+
+## 1. Overview
+
+DAF integrates AI at four levels:
+
+| Level | Feature |
+|-------|---------|
+| **Conversational** | AI Assistant chat panel with tool access |
+| **Data Operations** | AI-driven CRUD on any accessible task |
+| **Generative** | AI-powered table/column generation from text |
+| **Semantic Search** | Vector-based file/document retrieval |
+
+## 2. `IAIProvider` Interface
+
+```csharp
+public interface IAIProvider : IExtensibleInterface
+{
+    string?    SystemPrompt { get; set; }
+    Delegate[] TasksMethods { get; set; }
+    Task<string?> AddMessage(string prompt, byte[]? file = null, string? mediaType = "image/jpeg");
+    void          ClearMessages();
+    Task<string?> GetAnswer(string question);
+    Task<string?> GetAnswerWithFile(string question, byte[] file, string mediaType);
+}
+```
+
+### Built-in Implementations
+
+| Class | Backend |
+|-------|---------|
+| `AILogic` (AzureOpenAIProvider) | Azure OpenAI |
+| `ClaudeAILogic` (ClaudeAIProvider) | Anthropic Claude |
+
+```csharp
+IAIProvider ai = await session.Application.GetDefaultAIProvider();
+```
+
+## 3. `AIAssistantTaskModel` — Built-in Tool Functions
+
+The AI assistant exposes 12 built-in tool methods:
+
+| Tool | Category | Purpose |
+|------|----------|---------|
+| `CurrentDate` | Read | Returns the current date |
+| `GetTaskList` | Read | Lists all registered tasks |
+| `Get_Valid_Field_Names` | Read | Lists table columns |
+| `GetObjectList` | Read | Queries a table with filters |
+| `GetObjectCount` | Read | Counts matching rows |
+| `Search` | Read | Semantic vector search |
+| `Update_Record` | Write* | Updates a row field |
+| `Add_Record` | Write* | Creates a new row |
+| `Add_Multiple_Records` | Write* | Creates multiple rows |
+| `Delete_Record` | Write* | Deletes a row |
+| `Create_New_Table` | Write* | Creates a new domain table via AI |
+| `MemorizeImage` | Special | Indexes an image in the vector store |
+
+*Write operations require `confirmed = true` — the AI must get user acknowledgment before data changes commit.
+
+## 4. AI Agents (`DafAIAgent_GMS`)
+
+An **AI Agent** is a named system prompt configuration.
+
+| Column | Purpose |
+|--------|---------|
+| `AgentKey` | PK |
+| `AgentName` | Display name |
+| `SystemPrompt` | System-level instructions sent to the model |
+
+Register a custom agent in a module:
+
+```csharp
+dal.InsertRow("DafAIAgent_GMS", new List<clsColumnAndValue>
+{
+    new clsColumnAndValue(agentCols[0], "Sales Assistant"),
+    new clsColumnAndValue(agentCols[1], "Sales Assistant"),
+    new clsColumnAndValue(agentCols[2], "You are an expert in sales analytics...")
+});
+```
+
+## 5. Adding Custom Tool Functions
+
+```csharp
+[McpServerTool, Description("Get inventory items below reorder point")]
+public async Task<string> GetLowInventoryItems(
+    [Description("Minimum quantity threshold")] int threshold = 10)
+{
+    var items = DbTables.Table(Session, "InventoryItem");
+    var sel = items.GetEmptySelection();
+    sel.AddCriteria("QuantityOnHand", SelectionOperatorEnum.IsLessThan, threshold);
+    var rows = items.GetRows(sel);
+    return JsonSerializer.Serialize(rows.Select(r => new {
+        Name = r.GetValue("ItemName"),
+        Qty  = r.GetValue("QuantityOnHand")
+    }));
+}
+
+// Register with the AI provider:
+aiChat.TasksMethods = [
+    CurrentDate, GetObjectList, Update_Record, Search,
+    GetLowInventoryItems  // ← your custom tool
+];
+```
+
+## 6. Semantic Search
+
+```csharp
+public interface IVectorStore
+{
+    Task<IEnumerable<IGenericEntity>> SearchAsync(string userId, string searchTerm, int top);
+    Task UpsertAsync(string userId, IEnumerable<IGenericEntity> records);
+    Task DeleteAsync(string userId, IEnumerable<string> keys);
+}
+
+// Search
+var results = await vectorStore.SearchAsync(userId, "quarterly revenue report", top: 5);
+
+// Index a document
+var entity = vectorStore.NewGenericEntity("Document", docKey, documentText);
+await vectorStore.UpsertAsync(userId, new[] { entity });
+```
+
+## 7. AI Configuration
+
+In `appsettings.json`:
+
+```json
+"daf": {
+  "ai": {
+    "OpenAI": {
+      "Endpoint": "https://your-aoai.openai.azure.com/",
+      "ApiKey": "...",
+      "ModelName": "gpt-4-dpl",
+      "EmbedModelName": "text-embedding-ada-002"
+    }
+  }
+}
+```
+
+For Claude, configure a `DafProviderResource_GMS` row in the admin UI after startup.
+
+## 8. End-to-End AI Flow
+
+```
+User types message in web console
+  → AIAssistantTaskModel.AddMessage(userPrompt)
+  → IAIProvider.AddMessage(userPrompt)
+  → LLM processes, may call tools:
+      GetObjectList  → DbTables.Table()
+      Add_Record     → requires confirmed=true
+      Search         → IVectorStore.SearchAsync()
+      MemorizeImage  → IFileProvider.Upload()
+  → LLM assembles response text
+  → Response displayed in chat (UserMessages view)
+```
+
+## 9. MCP Support
+
+Methods annotated with `[McpServerTool]` are also exposed via the Model Context Protocol, allowing external MCP clients (e.g., Claude Desktop) to call them directly.
+
+## 10. AI Features Checklist
+
+- [ ] Configure `daf:ai:OpenAI:*` in `appsettings.json` or a `DafProviderResource_GMS` row
+- [ ] Set `daf:SQLiteDatabaseFolder` for the vector store database
+- [ ] Set `SafeUpdates = true` on tables you want the AI to write to
+- [ ] Register custom tool functions by appending delegates to `aiChat.TasksMethods`
+- [ ] Annotate tool methods with `[McpServerTool]` and `[Description]` for MCP support
+- [ ] Seed AI agents in `DafAIAgent_GMS` for different system prompt configurations
+</script>
+
+<script type="text/markdown" data-target="render-localization">
+# Localization Guide
+
+## 1. Overview
+
+DAF's localization system lets every user-visible string be translated into any language without changing code.
+
+```
+ILocalStringProvider
+├── DefaultLocalStringProvider  ← reads from .NET resource files
+└── DafLocalStringProvider      ← reads from DafString_GMS
+      └── auto-translates via ITranslationProvider (Azure, Google)
+```
+
+## 2. Database Tables
+
+| Table | Purpose |
+|-------|---------|
+| `DafString_GMS` | String keys with one column per language |
+| `DafLanguage_GMS` | Registered languages |
+
+### `DafString_GMS` Schema
+
+| Column | Purpose |
+|--------|---------|
+| `StringKey` | PK — typically the English text (max 50 chars) |
+| `English` | English translation (always populated; source for auto-translation) |
+| `{LanguageName}` | One column per additional language (e.g., `Russian`, `Spanish`) |
+
+Adding a language automatically adds a new column to `DafString_GMS`.
+
+## 3. Using Localization in Code
+
+```csharp
+// In a TableModel or TaskModel
+string label = LocalText("Save changes?");      // uses session's language
+string title = session.Local.GetLocalString("Products");
+
+// Column captions (automatic)
+oColumn.Caption = "ProductName";   // key looked up in DafString_GMS
+
+// Static list items
+new ListItem { Value = "A", Name = "Active", StringKey = "Active" }
+// StringKey → looked up in DafString_GMS for the current user's language
+```
+
+## 4. `ILocalStringProvider` Interface
+
+```csharp
+string label  = session.Local.GetLocalString("Save changes?");
+int    langId = session.Local.LanguageID;
+session.Local.LanguageID = 3;   // switch language for this session
+```
+
+## 5. Auto-Translation
+
+When a new language is added, `LanguageTable.OnDB_AfterInsertRow` automatically translates all existing strings via `ITranslationProvider`:
+
+```csharp
+// Implemented by:
+AzureTranslationProvider  // requires daf:AZURE_TRANSLATE_APIKEY
+GoogleTranslationProvider // requires daf:GOOGLE_APIKEY
+```
+
+Configure in `appsettings.json`:
+```json
+"daf": {
+  "AZURE_TRANSLATE_APIKEY": "3a77...",
+  "GOOGLE_APIKEY": "AIza..."
+}
+```
+
+## 6. Adding a New Language
+
+1. Configure a translation provider (Azure or Google API key)
+2. Insert a row into `DafLanguage_GMS` with `LanguageCode` (e.g., `"ru-RU"`) and `LanguageName` (e.g., `"Russian"`)
+3. The framework automatically adds a `Russian` column to `DafString_GMS` and translates all existing strings
+4. Users can now select Russian in their profile settings
+
+## 7. Managing Translations
+
+Use the admin **Local Strings** task to view and edit translations. Keys are auto-created when `LocalText("some string")` is first called on a string that doesn't exist yet.
+
+## 8. Predefined Framework Keys (`LocalStringNames`)
+
+The framework uses a set of standard keys for system messages:
+
+```csharp
+LocalStringNames.SaveChanges  = "Save changes?"
+LocalStringNames.AreYouSure   = "Are you sure?"
+LocalStringNames.RecordSaved  = "Record saved."
+LocalStringNames.DeleteRecord = "Delete this record?"
+```
+
+## 9. Localization Checklist
+
+- [ ] Configure `daf:AZURE_TRANSLATE_APIKEY` or `daf:GOOGLE_APIKEY` for auto-translation
+- [ ] Set column `CaptionStringNo` in `DafColumn_GMS` to the English text (auto-looked-up)
+- [ ] Use `LocalText("string")` instead of hard-coded strings in task models
+- [ ] Use `IsLocalString = true` on columns whose stored values are string keys
+- [ ] Add languages via the admin Languages task — all existing strings are auto-translated
+</script>
+
+<script type="text/markdown" data-target="render-providers">
+# Providers and Resources Guide
+
+## 1. Overview
+
+DAF uses a two-level pluggable provider system:
+
+```
+DafProvider_GMS               ← provider type (what it is + how to create it)
+└── DafProviderResource_GMS   ← named configured instance (connection string)
+```
+
+**System Settings** (`DafSystemSettings_GMS`) store keys selecting which resource is the active default for each capability.
+
+## 2. `DafProvider_GMS` — Provider Registry
+
+| Column | Purpose |
+|--------|---------|
+| `ProviderKey` | PK |
+| `ProviderType` | Category (see `ProviderTypeEnum`) |
+| `ProviderName` | Display name |
+| `LogicalClassName` | Key used with `ObjectFactory.CreateObject()` |
+
+### `ProviderTypeEnum`
+
+| Value | Capability |
+|-------|-----------|
+| `Database (1)` | `IDataAccess` |
+| `FileStorage (2)` | `IFileProvider` |
+| `Indexing (3)` | Vector / semantic search |
+| `Translation (4)` | `ITranslationProvider` |
+| `Email (5)` | Email sending |
+| `AI (6)` | `IAIProvider` |
+
+### Built-in Providers (seeded by CoreModule)
+
+| LogicalClassName | ProviderType | What it implements |
+|-----------------|--------------|--------------------|
+| `SqlServerDataProvider` | Database | SQL Server |
+| `MySqlDataProvider` | Database | MySQL |
+| `SQLiteDataProvider` | Database | SQLite |
+| `FileSystemFileProvider` | FileStorage | Local FS |
+| `AzureBlobFileProvider` | FileStorage | Azure Blob |
+| `S3FileProvider` | FileStorage | AWS S3 |
+| `AzureTranslatorProvider` | Translation | Azure Translator |
+| `GoogleTranslatorProvider` | Translation | Google Translator |
+| `AzureOpenAIProvider` | AI | Azure OpenAI |
+| `ClaudeAIProvider` | AI | Anthropic Claude |
+
+## 3. `DafProviderResource_GMS` — Configured Instances
+
+| Column | Purpose |
+|--------|---------|
+| `ResourceKey` | PK |
+| `ResourceName` | Human-readable name |
+| `ProviderKey` | FK → `DafProvider_GMS` |
+| `ConnectionString` | Connection details (hidden, Password domain) |
+| `IsSystem` | `true` = auto-created from `appsettings.json` |
+
+### AI Provider Connection String Format
+
+```
+Endpoint=https://your-aoai.openai.azure.com/;ApiKey=...;ModelName=gpt-4;EmbedModelName=text-embedding-ada-002
+```
+
+## 4. System Default Resources (`DafSystemSettings_GMS`)
+
+| Setting key | Points to |
+|-------------|---------|
+| `DefaultAIResourceKey` | Active AI provider resource |
+| `DefaultTranslationResKey` | Active translation provider |
+| `DefaultContainerKey` | Default file storage container |
+| `DefaultSkinKey` | Default UI theme |
+
+```csharp
+// Read
+string aiKey = SystemSettingsTable.SystemSettings("DefaultAIResourceKey");
+
+// Write
+SystemSettingsTable.SystemSettingsSet("DefaultAIResourceKey", newResourceKey);
+```
+
+## 5. Implementing a Custom Provider Resource
+
+```csharp
+public class MyCustomStorageProvider : IFileProvider, IProviderResource
+{
+    private string _rootPath;
+
+    public void SetupConnectionString(clsObjectEx parameters)
+    {
+        // Build connection string from user-provided parameters
+        ConnectionString = $"RootPath={parameters["RootPath"]}";
+    }
+
+    public void Connect(string connectionString)
+    {
+        _rootPath = ConnectionStringParser.GetValue(connectionString, "RootPath");
+    }
+
+    public async Task UploadloadBytes(string location, byte[] content)
+        => await File.WriteAllBytesAsync(Path.Combine(_rootPath, location), content);
+
+    public async Task<byte[]> DownloadBytes(string location)
+        => await File.ReadAllBytesAsync(Path.Combine(_rootPath, location));
+
+    public async Task Delete(string location)
+        => File.Delete(Path.Combine(_rootPath, location));
+}
+
+// Register in a module:
+EnsureRegisterClassName<MyCustomStorageProvider>("MyCustomStorage");
+```
+
+## 6. Auto-Registration from `appsettings.json`
+
+The framework automatically creates `DafProviderResource_GMS` rows from these settings at startup:
+
+```json
+"daf": {
+  "ai": { "OpenAI": { "Endpoint": "...", "ApiKey": "..." } },
+  "AZURE_TRANSLATE_APIKEY": "...",
+  "GOOGLE_APIKEY": "...",
+  "FileSystemProviderRootPath": "C:\\DafFiles"
+}
+```
+
+These are marked `IsSystem = true` and are read-only in the admin UI.
+
+## 7. Providers Checklist
+
+- [ ] For AI: configure `daf:ai:OpenAI:*` or add a `DafProviderResource_GMS` row in admin UI
+- [ ] For file storage: set `daf:FileSystemProviderRootPath` or configure Azure Blob / S3 via admin
+- [ ] For translation: set `daf:AZURE_TRANSLATE_APIKEY` or `daf:GOOGLE_APIKEY`
+- [ ] Set defaults in `DafSystemSettings_GMS` via admin System Settings task
+- [ ] Register custom providers via `EnsureRegisterClassName<T>` in a module
+</script>
+
+<script type="text/markdown" data-target="render-security">
+# Users, Roles, and Security Guide
+
+## 1. Overview — Three Security Layers
+
+```
+Authentication  → Who is the user? (Login, AzureAD, social OAuth)
+Authorization   → What tasks can they run? (Roles + Permissions)
+Access Control  → Which specific objects? (AccessSet + RoleAccess)
+```
+
+All layers are managed by `ISecurityProvider`. The default is `DefaultSecurityProvider`.
+
+## 2. Database Tables
+
+| Table | Purpose |
+|-------|---------|
+| `DafUser_GMS` | User accounts |
+| `DafRole_GMS` | Named roles |
+| `DafUserRole_GMS` | Many-to-many user ↔ role assignments |
+| `DafPermission_GMS` | Role ↔ task permissions |
+| `DafAccessSet_GMS` | Object-level access registry |
+| `DafRoleAccess_GMS` | Roles assigned to objects |
+
+## 3. Users (`DafUser_GMS`)
+
+| Column | Purpose |
+|--------|---------|
+| `UserKey` | Numeric PK |
+| `UserName` | Login name or email |
+| `Pwd` | Password |
+| `DefaultRoleKey` | Optional role that overrides all other assignments |
+
+### Bootstrap Admin
+First user: `UserKey = 1`, `UserName = "admin"`, `Pwd = "admin"`. **Change immediately after first startup.**
+
+### Auto-Creation from External Auth
+When `Schema = "AzureAD"` or `"Identity"`, users are auto-created on first login:
+- Email matches `daf:AdminUserName` → assigned to Admins role
+- Otherwise → assigned to Guests role
+
+## 4. Built-in Roles
+
+| Role | Key | Behaviour |
+|------|-----|-----------|
+| **Admins** | `1` | Full access — `CanDo` always returns `true` |
+| **Guests** | `2` | Implicit role for every authenticated user |
+| **Public** | `-1` | Assigned to unauthenticated users |
+
+## 5. Permissions (`DafPermission_GMS`)
+
+Three security actions control every task:
+
+| Action | Effect when denied |
+|--------|--------------------|
+| `SecurityActions.RunTask` | Task cannot be opened |
+| `SecurityActions.SuperviseTask` | Opens without supervisor privileges |
+| `SecurityActions.ChangeTaskData` | Opens in read-only mode |
+
+Manage via the admin **Role Access** task (`RoleAccessForm`).
+
+## 6. `ISecurityProvider` Interface
+
+```csharp
+public interface ISecurityProvider
+{
+    Task<clsObjectEx> Login(clsObjectEx input);
+    List<int> GetUserRoles(string userKey);
+    bool CanDo(clsObjectEx context);
+    List<AccessibleObject> CheckAccess(List<AccessibleObject> objects);
+    bool IsAdmin(string userKey);
+    Task<clsObjectEx> TryGetAuthenticatedUser();
+}
+```
+
+### Common Usage
+
+```csharp
+// Check if current user can run a task
+bool canRun = session.SecurityProvider.CanDo(new clsObjectEx
+{
+    ["action"]    = "RunTask",
+    ["TaskDefID"] = "PROD_TASK_001"
+});
+
+// Check if admin
+bool isAdmin = session.SecurityProvider.IsAdmin(session.UserID);
+
+// Get user roles
+List<int> roles = session.SecurityProvider.GetUserRoles(session.UserID);
+bool isManager = roles.Contains(RoleIds.Manager);
+```
+
+## 7. Object-Level Access Control
+
+Beyond task permissions, specific objects (grid views, report exports) can have their own access sets:
+
+```csharp
+// Check access to a specific object
+var objects = new List<AccessibleObject>
+{
+    new AccessibleObject { Key = "API_Product", ObjectType = "GridView" }
+};
+var results = session.SecurityProvider.CheckAccess(objects);
+bool hasAccess = results.FirstOrDefault()?.HasAccess ?? false;
+```
+
+## 8. Custom `ISecurityProvider`
+
+```csharp
+public class MySecurityProvider : DefaultSecurityProvider
+{
+    public override bool CanDo(clsObjectEx context)
+    {
+        // Add time-based restriction
+        if (DateTime.Now.Hour < 8 || DateTime.Now.Hour > 18)
+        {
+            var action = context["action"]?.ToString();
+            if (action == "RunTask" && !IsAdmin(Session.UserID))
+                return false; // deny outside business hours
+        }
+        return base.CanDo(context);
+    }
+}
+
+// Register in a module:
+EnsureRegisterClassName<MySecurityProvider>(ProviderNames.SecurityProvider);
+```
+
+## 9. Security Checklist
+
+- [ ] Change the default admin password immediately after first startup
+- [ ] Set `daf:AdminUserName` to the email address of your bootstrap admin
+- [ ] Create roles in `DafRole_GMS`; assign users via the Users/User-Roles admin tasks
+- [ ] Assign task permissions via the **Permissions** admin task for each role
+- [ ] Use `SecurityActions.RunTask` / `SuperviseTask` / `ChangeTaskData` consistently
+- [ ] For object-level access (grid views, API endpoints), use `DafAccessSet_GMS` + `DafRoleAccess_GMS`
+- [ ] Test all security restrictions with both admin and non-admin accounts
+</script>
+
+<script type="text/markdown" data-target="render-logging">
+# Exception Handling, Logging, and Troubleshooting Guide
+
+## 1. Exception Types
+
+### `DafUserException` — User-Facing Errors
+
+Shows a message box with the error text; no stack trace logged.
+
+```csharp
+protected internal override void OnValidateRow(RowModel row)
+{
+    base.OnValidateRow(row);
+    if (row.GetDecimal("Price") <= 0)
+        throw new DafUserException("Price must be greater than zero.");
+}
+
+protected override void OnDB_BeforeDeleteRow(RowModel row)
+{
+    base.OnDB_BeforeDeleteRow(row);
+    if (HasActiveOrders(row))
+        throw new DafUserException(LocalText("Cannot delete a product with active orders."));
+}
+```
+
+### `"NoMessage"` — Silent Cancellation
+
+```csharp
+public override void ExecuteCommand(string commandName)
+{
+    if (commandName == "Export" && !UserCanExport())
+        throw new Exception("NoMessage"); // cancel silently
+    base.ExecuteCommand(commandName);
+}
+```
+
+### Standard `Exception` — Technical Failures
+
+Any non-`DafUserException` exception gets a random **correlation ID**, the stack trace is logged, and the user sees:
+
+```
+Unexpected error. Please contact administrator.
+Error: 8f3a2b1c4d5e6f7a8b9c0d1e2f3a4b5c
+```
+
+The correlation ID appears in both the message and the log file.
+
+## 2. `IErrorHandler` Interface
+
+```csharp
+public interface IErrorHandler
+{
+    void Init(clsSession session);
+    void HandleError(Exception ex);
+}
+```
+
+Built-in implementations:
+
+| Class | Behaviour |
+|-------|-----------|
+| `DefaultErrorHandler` | Shows a message box for `DafUserException`; logs + shows correlation ID for others |
+| `ListErrorHandler` | Collects errors into a list for batch operations |
+
+### Custom Error Handler
+
+```csharp
+public class MyErrorHandler : DefaultErrorHandler
+{
+    public override void HandleError(Exception ex)
+    {
+        if (ex is DafUserException)
+        {
+            base.HandleError(ex);
+            return;
+        }
+        // Send to external monitoring (e.g., Application Insights)
+        Telemetry.TrackException(ex);
+        base.HandleError(ex);
+    }
+}
+```
+
+## 3. Logging — `ILogger`
+
+```csharp
+public interface ILogger
+{
+    void Log(string message, int level = 4);
+    int LogLevel { get; set; }
+}
+```
+
+### Built-in Implementations
+
+| Class | Output |
+|-------|--------|
+| `TraceLogger` | Text file at `AppSettings:LogFilePath` |
+| `DotNetLogger` | `Microsoft.Extensions.Logging` pipeline |
+
+### Log Levels
+
+| Level | Constant | Meaning |
+|-------|----------|---------|
+| `0` | None | No logging |
+| `1` | Error | Errors only |
+| `2` | Warning | Errors + warnings |
+| `3` | Debug | + debug info |
+| `4` | Info (default) | + informational |
+| `5` | Verbose | Everything |
+
+### Using the Logger
+
+```csharp
+// Static access
+LogMe.Log("Processing import batch of 500 rows.");
+LogMe.Log($"Order {orderId} approved by {userId}.", level: 4);
+
+// Via session
+session.Logger.Log("Cache miss — reloading metadata.", level: 3);
+
+// Change verbosity at runtime
+session.Logger.LogLevel = 5; // verbose
+```
+
+### User Action Logging
+
+DAF automatically logs every task open/close and command execution as structured JSON:
+
+```json
+{
+  "action": "RunTask",
+  "taskId": "PROD_TASK_001",
+  "userId": "42",
+  "timestamp": "2025-06-01T10:23:45Z"
+}
+```
+
+## 4. Diagnostic Checklist
+
+| Symptom | Check |
+|---------|-------|
+| Task doesn't open | Check `DafTask_GMS` row exists; check `RunTask` permission; check logs for constructor exceptions |
+| Grid shows no data | Verify `SetDefaultFilter` isn't over-restricting; check connection string |
+| Validation not firing | Ensure `OnValidateField` calls `base.OnValidateField` |
+| Module not installing | Check `EnsureModule` dependency order; look for exception in startup logs |
+| AI not responding | Verify `DefaultAIResourceKey` in `DafSystemSettings_GMS`; check API key in `DafProviderResource_GMS` |
+
+### Increasing Log Verbosity
+
+```json
+"AppSettings": {
+  "LogLevel": 5,
+  "LogFilePath": "C:\\logs\\MyApp\\TraceLog.txt"
+}
+```
+
+Or at runtime in a module or diagnostic task:
+```csharp
+session.Logger.LogLevel = 5;
+```
+
+## 5. Correlation IDs
+
+When an unexpected exception occurs, DAF assigns a GUID correlation ID. This ID appears:
+- In the user-facing error message
+- In the `TraceLogger` file, prefixed before the stack trace
+- Optionally in external monitoring if you forward via a custom `IErrorHandler`
+
+Search the log file for the correlation ID to find the exact stack trace for a reported incident.
+</script>
+
+<!-- CDN Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+<script>
+// ─── Configure marked ────────────────────────────────────────────
+marked.setOptions({
+  gfm: true,
+  breaks: false,
+  highlight: function(code, lang) { return code; }
+});
+
+// ─── Render all markdown script blocks ──────────────────────────
+document.querySelectorAll('script[type="text/markdown"]').forEach(function(script) {
+  var targetId = script.getAttribute('data-target');
+  var target   = document.getElementById(targetId);
+  if (!target) return;
+  try {
+    var html = marked.parse(script.textContent);
+    target.innerHTML = html;
+    // Apply Prism to code blocks
+    target.querySelectorAll('pre code').forEach(function(block) {
+      var cls = block.className || '';
+      var lang = cls.replace('language-','');
+      if (!lang || lang === 'code') {
+        var content = block.textContent || '';
+        if (content.trim().startsWith('using') || content.includes('namespace') || content.includes('public class') || content.includes('protected override'))
+          block.className = 'language-csharp';
+        else if (content.trim().startsWith('{') || content.trim().startsWith('['))
+          block.className = 'language-json';
+        else if (content.trim().startsWith('GET') || content.trim().startsWith('POST') || content.trim().startsWith('PUT') || content.trim().startsWith('DELETE'))
+          block.className = 'language-http';
+        else if (content.includes('dotnet') || content.includes('cd '))
+          block.className = 'language-bash';
+        else if (content.trim().startsWith('//') || content.includes('function') || content.includes('const ') || content.includes('var ') && !content.includes('public'))
+          block.className = 'language-javascript';
+        else if (content.includes(':root') || content.includes('--daf') || content.includes('background:'))
+          block.className = 'language-css';
+        else
+          block.className = 'language-csharp';
+      }
+    });
+    if (window.Prism) Prism.highlightAllUnder(target);
+  } catch(e) { console.error('Render error for', targetId, e); }
+});
+
+// ─── Sidebar navigation ──────────────────────────────────────────
+function scrollToSection(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.nav-link').forEach(function(l) { l.classList.remove('active'); });
+  var link = document.querySelector('.nav-link[onclick*="' + id + '"]');
+  if (link) link.classList.add('active');
+  document.getElementById('breadcrumb').innerHTML =
+    '<span>Docs</span><span>' + (link ? link.textContent.trim() : id) + '</span>';
+}
+
+// ─── Search ──────────────────────────────────────────────────────
+document.getElementById('nav-search').addEventListener('input', function() {
+  var q = this.value.toLowerCase().trim();
+  document.querySelectorAll('.nav-link').forEach(function(link) {
+    var text = link.textContent.toLowerCase();
+    link.style.display = (!q || text.includes(q)) ? '' : 'none';
+  });
+  document.querySelectorAll('.nav-label').forEach(function(label) {
+    var section = label.nextElementSibling;
+    var hasVisible = false;
+    while (section && section.classList.contains('nav-link')) {
+      if (section.style.display !== 'none') hasVisible = true;
+      section = section.nextElementSibling;
+    }
+    label.style.display = hasVisible ? '' : 'none';
+  });
+});
+
+// ─── Back to top ─────────────────────────────────────────────────
+var btn = document.getElementById('back-to-top');
+window.addEventListener('scroll', function() {
+  btn.classList.toggle('visible', window.scrollY > 400);
+});
+
+// ─── Intersection observer for active nav ───────────────────────
+if ('IntersectionObserver' in window) {
+  var sections = document.querySelectorAll('.doc-section[id]');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        document.querySelectorAll('.nav-link').forEach(function(l) { l.classList.remove('active'); });
+        var link = document.querySelector('.nav-link[onclick*="' + id + '"]');
+        if (link) {
+          link.classList.add('active');
+          document.getElementById('breadcrumb').innerHTML =
+            '<span>Docs</span><span>' + link.textContent.trim() + '</span>';
+          link.scrollIntoView({ block: 'nearest' });
+        }
+      }
+    });
+  }, { rootMargin: '-10% 0px -80% 0px' });
+  sections.forEach(function(s) { observer.observe(s); });
+}
+</script>
+</body>
+</html>
