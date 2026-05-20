@@ -1,6 +1,5 @@
 using GsoftApp.Framework.Development;
 using GsoftApp.Framework.Web.Core;
-using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,10 +8,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 //Add DAF to bootstrap your application (codename GNode). And install the "Development" module.
 builder.Services.AddDaf(builder.Configuration, o => o.CustomModules.Add(new DevelopmentModule()));
-
-//Add a dummy authentication if you don't have any. Use it for only testing purposes. Authenticates any user as "admin".
-builder.Services.AddAuthentication("dummy").AddScheme<AuthenticationSchemeOptions, DummyAuthenticationHandler>("dummy", null);
-
 
 var app = builder.Build();
 
