@@ -1,0 +1,6 @@
+@GsoftApp.Samples.Net10_HostAddress = http://localhost:5187
+
+GET {{GsoftApp.Samples.Net10_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
